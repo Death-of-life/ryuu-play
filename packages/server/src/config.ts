@@ -66,7 +66,7 @@ export const config = {
   },
   sets: {
     scansDir: '',
-    scansDownloadUrl: 'http://localhost/scans', // Server downloads missing scans from there
+    scansDownloadUrl: 'http://localhost/scans', // Deprecated: missing scans are not downloaded at startup
     scansUrl: '/scans/{set}/{name}.jpg'
   },
   email: {

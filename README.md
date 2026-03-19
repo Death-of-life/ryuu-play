@@ -77,14 +77,16 @@ The service should now listen on the specified address and port. It will be http
 
 ### Card images
 
-In the early versions of this application, card scans were committed to the repository. This is not a good solution, because it causes the repository to be large. Currently, the repository does not contain card images, and they are downloaded when the server is first started.
+In the early versions of this application, card scans were committed to the repository. This is not a good solution, because it causes the repository to be large.
 
-If the card image file does not exist, it is downloaded and saved to disk. The following values ​​from the configuration file are important here:
+The server no longer downloads missing scans on startup. For newly added cards, use the GitHub image URL returned by `.agents/skills/card-data-finder` as the fallback source.
+
+The following values from the configuration file are still relevant for local scans:
 
 ```
 // Directory where the scans will be saved on the disk
 config.sets.scansDir = __dirname + '/scans';
-// External location, where the scan images will be downloaded from
+// Legacy option (no longer used for startup downloads)
 config.sets.scansDownloadUrl = 'https://ptcg.ryuu.eu/scans';
 ```
 

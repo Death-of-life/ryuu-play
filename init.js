@@ -16,7 +16,7 @@ config.bots.defaultPassword = 'bot';
 
 // Sets/scans config
 config.sets.scansDir = __dirname + '/scans';
-config.sets.scansDownloadUrl = 'https://ptcg.ryuu.eu/scans'; // Server to download missing scans
+config.sets.scansDownloadUrl = 'https://ptcg.ryuu.eu/scans'; // Deprecated: missing scans are not downloaded at startup
 
 // Define available sets
 const { baseSets, exSets, standardSets } = require('@ptcg/sets');

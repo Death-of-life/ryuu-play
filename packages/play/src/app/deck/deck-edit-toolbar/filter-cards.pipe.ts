@@ -25,13 +25,15 @@ export class FilterCardsPipe implements PipeTransform {
       return items;
     }
 
+    const searchValue = filter.searchValue.toLowerCase().trim();
+
     return items.filter(item => {
       const card = item.card;
       if (filter.formatName !== '' && !this.cardBaseService.isCardFromFormat(card.fullName, filter.formatName)) {
         return false;
       }
 
-      if (filter.searchValue !== '' && card.name.indexOf(filter.searchValue) === -1) {
+      if (searchValue !== '' && !this.matchesSearch(card, searchValue)) {
         return false;
       }
 
@@ -45,6 +47,11 @@ export class FilterCardsPipe implements PipeTransform {
 
       return true;
     });
+  }
+
+  private matchesSearch(card: Card, searchValue: string): boolean {
+    return card.name.toLowerCase().includes(searchValue)
+      || card.fullName.toLowerCase().includes(searchValue);
   }
 
   private getCardTypes(card: Card): CardType[] {
