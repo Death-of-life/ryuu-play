@@ -68,6 +68,44 @@ export class CardList<T extends Card = Card> {
     this.moveCardsTo([card], destination);
   }
 
+  public moveToBottom(destination: CardList, count?: number): void {
+    if (count === undefined) {
+      count = this.cards.length;
+    }
+
+    count = Math.min(count, this.cards.length);
+    const cards = this.cards.splice(0, count);
+    destination.cards.push(...CardList.shuffle(cards));
+  }
+
+  public moveCardsToBottom(cards: T[], destination: CardList): void {
+    const movedCards: T[] = [];
+    for (let i = 0; i < cards.length; i++) {
+      const index = this.cards.indexOf(cards[i]);
+      if (index !== -1) {
+        const card = this.cards.splice(index, 1);
+        movedCards.push(card[0]);
+      }
+    }
+
+    destination.cards.push(...CardList.shuffle(movedCards));
+  }
+
+  public moveCardToBottom(card: T, destination: CardList): void {
+    this.moveCardTo(card, destination);
+  }
+
+  private static shuffle<K>(cards: K[]): K[] {
+    const shuffled = cards.slice();
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const randomIndex = Math.floor(Math.random() * (i + 1));
+      const tmp = shuffled[i];
+      shuffled[i] = shuffled[randomIndex];
+      shuffled[randomIndex] = tmp;
+    }
+    return shuffled;
+  }
+
   public moveToTop(destination: CardList, count?: number): void {
     if (count === undefined) {
       count = this.cards.length;

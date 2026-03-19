@@ -115,6 +115,33 @@ describe('CardList', () => {
     });
   });
 
+  describe('moveToBottom', () => {
+    let destination: CardList<TestCard>;
+
+    beforeEach(() => {
+      destination = new CardList<TestCard>();
+      cardList.cards = [card1, card2, card3];
+    });
+
+    it('should move all cards to the bottom by default', () => {
+      cardList.moveToBottom(destination);
+      expect(cardList.cards).toEqual([]);
+      expect(destination.cards).toEqual([card1, card2, card3]);
+    });
+
+    it('should move specified number of cards to bottom', () => {
+      cardList.moveToBottom(destination, 2);
+      expect(cardList.cards).toEqual([card3]);
+      expect(destination.cards).toEqual([card1, card2]);
+    });
+
+    it('should randomize moved cards order', () => {
+      spyOn(Math, 'random').and.returnValue(0);
+      cardList.moveToBottom(destination, 3);
+      expect(destination.cards).toEqual([card2, card3, card1]);
+    });
+  });
+
   describe('moveCardsTo', () => {
     let destination: CardList<TestCard>;
 
@@ -134,6 +161,39 @@ describe('CardList', () => {
       cardList.moveCardsTo([card1, card4], destination);
       expect(cardList.cards).toEqual([card2, card3]);
       expect(destination.cards).toEqual([card1]);
+    });
+  });
+
+  describe('moveCardsToBottom', () => {
+    let destination: CardList<TestCard>;
+
+    beforeEach(() => {
+      destination = new CardList<TestCard>();
+      destination.cards = [card3];
+      cardList.cards = [card1, card2];
+    });
+
+    it('should move specific cards to destination bottom', () => {
+      cardList.moveCardsToBottom([card2], destination);
+      expect(cardList.cards).toEqual([card1]);
+      expect(destination.cards).toEqual([card3, card2]);
+    });
+
+    it('should randomize moved cards before appending', () => {
+      const destination2 = new CardList<TestCard>();
+      destination2.cards = [card3];
+      cardList.cards = [card1, card2];
+      spyOn(Math, 'random').and.returnValue(0);
+
+      cardList.moveCardsToBottom([card1, card2], destination2);
+      expect(destination2.cards).toEqual([card3, card2, card1]);
+    });
+
+    it('should ignore cards not in list', () => {
+      const card4 = new TestCard();
+      cardList.moveCardsToBottom([card4], destination);
+      expect(cardList.cards).toEqual([card1, card2]);
+      expect(destination.cards).toEqual([card3]);
     });
   });
 

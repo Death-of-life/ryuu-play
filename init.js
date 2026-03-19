@@ -25,6 +25,7 @@ const cardManager = CardManager.getInstance();
 
 cardManager.defineFormat('Standard', [
   standardSets.setDiamondAndPearl,
+  standardSets.setCsv4c,
   standardSets.setCsv8c,
   standardSets.setOp9,
   standardSets.setHgss,
