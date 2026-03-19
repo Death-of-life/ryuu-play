@@ -1,5 +1,5 @@
 {
-  "name": "@ptcg",
+  "name": "@ptcg/root",
   "version": "0.2.1",
   "description": "Pokemon TCG game simulator",
   "scripts": {
