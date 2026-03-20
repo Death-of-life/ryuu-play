@@ -164,6 +164,48 @@ describe('CardList', () => {
     });
   });
 
+  describe('discard', () => {
+    let discardPile: CardList<TestCard>;
+
+    beforeEach(() => {
+      discardPile = new CardList<TestCard>();
+      cardList.cards = [card1, card2, card3];
+    });
+
+    it('should discard specific cards', () => {
+      cardList.discard([card1, card3], discardPile);
+      expect(cardList.cards).toEqual([card2]);
+      expect(discardPile.cards).toEqual([card1, card3]);
+    });
+
+    it('should discard a single card', () => {
+      cardList.discard(card2, discardPile);
+      expect(cardList.cards).toEqual([card1, card3]);
+      expect(discardPile.cards).toEqual([card2]);
+    });
+  });
+
+  describe('toLostZone', () => {
+    let lostZone: CardList<TestCard>;
+
+    beforeEach(() => {
+      lostZone = new CardList<TestCard>();
+      cardList.cards = [card1, card2, card3];
+    });
+
+    it('should move specific cards to lost zone', () => {
+      cardList.toLostZone([card1, card3], lostZone);
+      expect(cardList.cards).toEqual([card2]);
+      expect(lostZone.cards).toEqual([card1, card3]);
+    });
+
+    it('should move a single card to lost zone', () => {
+      cardList.toLostZone(card2, lostZone);
+      expect(cardList.cards).toEqual([card1, card3]);
+      expect(lostZone.cards).toEqual([card2]);
+    });
+  });
+
   describe('moveCardsToBottom', () => {
     let destination: CardList<TestCard>;
 

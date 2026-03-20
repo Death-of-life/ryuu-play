@@ -6,11 +6,13 @@ import { Charmeleon } from './charmeleon';
 import { FireCrystal } from './fire-crystal';
 import { GiantHearth } from './giant-hearth';
 import { Leon } from './leon';
+import { LumineonV } from './lumineon-v';
 import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { Oranguru } from './oranguru';
 import { Rosa } from './rosa';
 import { Snorlax } from './snorlax';
+import { TempleOfSinnoh } from './temple-of-sinnoh';
 import { Welder } from './welder';
 
 export const setSwordAndShield: Card[] = [
@@ -21,10 +23,12 @@ export const setSwordAndShield: Card[] = [
   new FireCrystal(),
   new GiantHearth(),
   new Leon(),
+  new LumineonV(),
   new OriginFormePalkiaV(),
   new OriginFormePalkiaVSTAR(),
   new Oranguru(),
   new Rosa(),
   new Snorlax(),
+  new TempleOfSinnoh(),
   new Welder(),
 ];

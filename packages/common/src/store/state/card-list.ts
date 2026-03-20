@@ -68,6 +68,16 @@ export class CardList<T extends Card = Card> {
     this.moveCardsTo([card], destination);
   }
 
+  public discard(cards: T[] | T, discardPile: CardList): void {
+    const cardsToDiscard = cards instanceof Array ? cards : [cards];
+    this.moveCardsTo(cardsToDiscard, discardPile);
+  }
+
+  public toLostZone(cards: T[] | T, lostZone: CardList): void {
+    const cardsToMove = cards instanceof Array ? cards : [cards];
+    this.moveCardsTo(cardsToMove, lostZone);
+  }
+
   public moveToBottom(destination: CardList, count?: number): void {
     if (count === undefined) {
       count = this.cards.length;
