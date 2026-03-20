@@ -6,6 +6,8 @@ import { Charmeleon } from './charmeleon';
 import { FireCrystal } from './fire-crystal';
 import { GiantHearth } from './giant-hearth';
 import { Leon } from './leon';
+import { OriginFormePalkiaV } from './origin-forme-palkia-v';
+import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { Oranguru } from './oranguru';
 import { Rosa } from './rosa';
 import { Snorlax } from './snorlax';
@@ -19,6 +21,8 @@ export const setSwordAndShield: Card[] = [
   new FireCrystal(),
   new GiantHearth(),
   new Leon(),
+  new OriginFormePalkiaV(),
+  new OriginFormePalkiaVSTAR(),
   new Oranguru(),
   new Rosa(),
   new Snorlax(),

@@ -14,6 +14,8 @@ import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect,
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
 
+const VSTAR_POWER_USED_MARKER = 'VSTAR_POWER_USED_MARKER';
+
 function applyWeaknessAndResistance(
   damage: number,
   cardTypes: CardType[],
@@ -110,7 +112,9 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     if (card !== undefined) {
 
       // Pokemon ex rule
-      if (card.tags.includes(CardTag.POKEMON_EX)) {
+      if (card.tags.includes(CardTag.POKEMON_EX)
+        || card.tags.includes(CardTag.POKEMON_V)
+        || card.tags.includes(CardTag.POKEMON_VSTAR)) {
         effect.prizeCount += 1;
       }
       
@@ -148,8 +152,23 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     const power = effect.power;
     const card = effect.card;
 
+    if (power.useVSTARPower) {
+      if (!card.tags.includes(CardTag.POKEMON_VSTAR)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      if (player.marker.hasMarker(VSTAR_POWER_USED_MARKER)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+    }
+
     store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
     state = store.reduceEffect(state, new PowerEffect(player, power, card));
+
+    if (power.useVSTARPower) {
+      player.marker.addMarker(VSTAR_POWER_USED_MARKER, card);
+    }
+
     return state;
   }
 
