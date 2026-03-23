@@ -10,6 +10,7 @@ import { LumineonV } from './lumineon-v';
 import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { Oranguru } from './oranguru';
+import { RadiantGreninja } from './radiant-greninja';
 import { Rosa } from './rosa';
 import { RotomV } from './rotom-v';
 import { Snorlax } from './snorlax';
@@ -28,6 +29,7 @@ export const setSwordAndShield: Card[] = [
   new OriginFormePalkiaV(),
   new OriginFormePalkiaVSTAR(),
   new Oranguru(),
+  new RadiantGreninja(),
   new Rosa(),
   new RotomV(),
   new Snorlax(),

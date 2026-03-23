@@ -25,6 +25,7 @@ export class DeckAnalyser {
     const countMap: { [name: string]: number } = { };
     let hasBasicPokemon: boolean = false;
     let hasAceSpec: boolean = false;
+    let hasRadiant: boolean = false;
 
     if (this.cards.length !== 60) {
       return false;
@@ -51,6 +52,13 @@ export class DeckAnalyser {
           return false;
         }
         hasAceSpec = true;
+      }
+
+      if (card.tags.includes(CardTag.RADIANT)) {
+        if (hasRadiant) {
+          return false;
+        }
+        hasRadiant = true;
       }
     }
 

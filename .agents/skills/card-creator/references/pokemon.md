@@ -14,6 +14,12 @@
 - 可选：`evolvesFrom`、`powers`、`tags`
 - 继承自 `Card` 的公共字段：`set`、`name`、`fullName`
 
+### 字段语言约定（重要）
+
+- `rawData` 中的 `raw_card/collection/image_url` 保持中文来源数据原样（便于追溯到 PTCG-CHS 与卡图）。
+- 卡牌实现字段使用英文：`powers[].name/text`、`attacks[].name/text`、`public text`、`fullName` 等。
+- 即：**数据源元信息中文，游戏逻辑文本英文**。
+
 最小模板：
 
 ```ts

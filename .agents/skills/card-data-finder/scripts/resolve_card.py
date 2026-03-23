@@ -85,6 +85,7 @@ def flatten_cards(data: Dict[str, Any]) -> List[Dict[str, Any]]:
                 "regulation_mark_text": get_detail_value(card, "regulationMarkText"),
                 "set_version": to_set_version(get_detail_value(card, "regulationMarkText")),
                 "hp": get_detail_value(card, "hp"),
+                "subtypes": get_detail_value(card, "subtypes") or [],
                 "image": image,
                 "image_url": to_image_url(image),
                 "hash": card.get("hash"),
@@ -135,6 +136,9 @@ def score_row(row: Dict[str, Any], query: str) -> int:
 
     if q and q in collection_name:
         score = max(score, 60)
+
+    if q.isascii() and q in name:
+        score = max(score, 110)
 
     return score
 

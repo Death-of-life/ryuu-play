@@ -1,6 +1,6 @@
 ---
 name: card-data-finder
-description: 在新增卡牌时，从 PTCG-CHS 数据集中检索卡牌对象与 GitHub 图床链接。只要用户提到“查卡图”“查卡牌数据”“从 ptcg_chs_infos.json 匹配卡牌”“多个候选让我选”，都应使用此 skill。
+description: 在新增卡牌时，从 PTCG-CHS 数据集中检索卡牌对象与 GitHub 图床链接。只要用户提到"查卡图""查卡牌数据""从 ptcg_chs_infos.json 匹配卡牌""多个候选让我选"，都应使用此 skill。
 ---
 
 # Card Data Finder
@@ -12,9 +12,16 @@ description: 在新增卡牌时，从 PTCG-CHS 数据集中检索卡牌对象与
 
 ## 数据来源
 
+### PTCG-CHS 数据集（中文卡图）
 - 元数据：`https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/ptcg_chs_infos.json`
 - 图片路径来源于对象中的 `image` 字段，最终 URL 规则：
   - `https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/<image>`
+
+### pokemon-tcg-data（英文卡数据）
+- 数据源：`https://api.pokemontcg.io/v2/cards`
+- 可通过 npm 包 `pokemon-tcg-data` 获取
+- **仅用于获取英文名字(用于文件和class命名)和 `subtypes` 字段**（如 Stage 2、Tera、Radiant、ex 等）
+- 检索时直接用 npm 包查询，匹配 `name` 字段获取卡牌完整信息
 
 ## 脚本入口
 
@@ -26,18 +33,24 @@ description: 在新增卡牌时，从 PTCG-CHS 数据集中检索卡牌对象与
 # 1) 更新本地缓存数据
 python3 .agents/skills/card-data-finder/scripts/resolve_card.py update
 
-# 2) 搜索卡牌（返回候选）
-python3 .agents/skills/card-data-finder/scripts/resolve_card.py search "喷火龙"
+# 2) 搜索卡牌（返回候选，支持中英文名）
+python3 .agents/skills/card-data-finder/scripts/resolve_card.py search "charizard"
 
 # 3) 直接选择某个候选并返回对象
-python3 .agents/skills/card-data-finder/scripts/resolve_card.py search "喷火龙" --select 1
+python3 .agents/skills/card-data-finder/scripts/resolve_card.py search "charizard" --select 1
 ```
+
+## 检索策略
+
+1. **优先英文名搜索**：用户提交名称时，先尝试搜索对应的英文名。
+2. **模糊匹配**：支持中文名、英文名、卡牌编号、yoren_code 等多种匹配方式。
+3. **如果不确定英文名**：可以询问用户是否知道英文名称。
 
 ## 标准流程
 
 1. 执行 `update`，确保本地缓存是最新。
 2. 执行 `search <query>` 获取候选。
-3. 若 `total_matches == 0`：告知用户未命中，并建议补充关键信息（系列、编号、中文名）。
+3. 若 `total_matches == 0`：告知用户未命中，并建议补充关键信息（系列、编号、中文名/英文名）。
 4. 若 `total_matches == 1`：直接返回 `selected.card` 与 `selected.image_url`。
 5. 若 `total_matches > 1`：
    - 先把候选提炼成编号列表给用户选（至少展示 index、name、collection_name、collection_number、image_url）。
