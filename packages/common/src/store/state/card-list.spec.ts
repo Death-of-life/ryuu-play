@@ -183,6 +183,13 @@ describe('CardList', () => {
       expect(cardList.cards).toEqual([card1, card3]);
       expect(discardPile.cards).toEqual([card2]);
     });
+
+    it('should use default discard pile when configured', () => {
+      cardList.setDefaultZones(discardPile, new CardList<TestCard>());
+      cardList.discard([card1, card3]);
+      expect(cardList.cards).toEqual([card2]);
+      expect(discardPile.cards).toEqual([card1, card3]);
+    });
   });
 
   describe('toLostZone', () => {
@@ -201,6 +208,13 @@ describe('CardList', () => {
 
     it('should move a single card to lost zone', () => {
       cardList.toLostZone(card2, lostZone);
+      expect(cardList.cards).toEqual([card1, card3]);
+      expect(lostZone.cards).toEqual([card2]);
+    });
+
+    it('should use default lost zone when configured', () => {
+      cardList.setDefaultZones(new CardList<TestCard>(), lostZone);
+      cardList.toLostZone(card2);
       expect(cardList.cards).toEqual([card1, card3]);
       expect(lostZone.cards).toEqual([card2]);
     });

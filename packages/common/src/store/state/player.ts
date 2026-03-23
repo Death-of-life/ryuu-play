@@ -16,6 +16,8 @@ export class Player {
 
   discard: CardList = new CardList();
 
+  lostzone: CardList = new CardList();
+
   stadium: CardList = new CardList();
 
   supporter: CardList = new CardList();
@@ -37,6 +39,33 @@ export class Player {
   marker = new Marker();
 
   avatarName: string = '';
+
+  constructor() {
+    this.refreshCardListTargets();
+  }
+
+  public refreshCardListTargets(): void {
+    const bind = (list: CardList) => list.setDefaultZones(this.discard, this.lostzone);
+
+    bind(this.deck);
+    bind(this.hand);
+    bind(this.discard);
+    bind(this.lostzone);
+    bind(this.stadium);
+    bind(this.supporter);
+
+    bind(this.active.pokemons);
+    bind(this.active.energies);
+    bind(this.active.trainers);
+
+    this.bench.forEach(slot => {
+      bind(slot.pokemons);
+      bind(slot.energies);
+      bind(slot.trainers);
+    });
+
+    this.prizes.forEach(bind);
+  }
 
   getPrizeLeft(): number {
     return this.prizes.reduce((left, p) => left + p.cards.length, 0);

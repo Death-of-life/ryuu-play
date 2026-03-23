@@ -25,6 +25,7 @@ describe('Player', () => {
     expect(player.deck).toBeInstanceOf(CardList);
     expect(player.hand).toBeInstanceOf(CardList);
     expect(player.discard).toBeInstanceOf(CardList);
+    expect(player.lostzone).toBeInstanceOf(CardList);
     expect(player.stadium).toBeInstanceOf(CardList);
     expect(player.supporter).toBeInstanceOf(CardList);
     expect(player.active).toBeInstanceOf(PokemonSlot);

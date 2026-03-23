@@ -11,6 +11,7 @@ import { OriginFormePalkiaV } from './origin-forme-palkia-v';
 import { OriginFormePalkiaVSTAR } from './origin-forme-palkia-vstar';
 import { Oranguru } from './oranguru';
 import { Rosa } from './rosa';
+import { RotomV } from './rotom-v';
 import { Snorlax } from './snorlax';
 import { TempleOfSinnoh } from './temple-of-sinnoh';
 import { Welder } from './welder';
@@ -28,6 +29,7 @@ export const setSwordAndShield: Card[] = [
   new OriginFormePalkiaVSTAR(),
   new Oranguru(),
   new Rosa(),
+  new RotomV(),
   new Snorlax(),
   new TempleOfSinnoh(),
   new Welder(),

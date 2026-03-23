@@ -11,6 +11,15 @@ export class CardList<T extends Card = Card> {
 
   public isSecret: boolean = false;
 
+  private discardPile?: CardList;
+
+  private lostZone?: CardList;
+
+  public setDefaultZones(discardPile: CardList, lostZone: CardList): void {
+    this.discardPile = discardPile;
+    this.lostZone = lostZone;
+  }
+
   public static fromList(names: string[]): CardList {
     const cardList = new CardList();
     const cardManager = CardManager.getInstance();
@@ -68,14 +77,22 @@ export class CardList<T extends Card = Card> {
     this.moveCardsTo([card], destination);
   }
 
-  public discard(cards: T[] | T, discardPile: CardList): void {
+  public discard(cards: T[] | T, discardPile?: CardList): void {
     const cardsToDiscard = cards instanceof Array ? cards : [cards];
-    this.moveCardsTo(cardsToDiscard, discardPile);
+    const target = discardPile ?? this.discardPile;
+    if (target === undefined) {
+      throw new GameError(GameMessage.INVALID_GAME_STATE);
+    }
+    this.moveCardsTo(cardsToDiscard, target);
   }
 
-  public toLostZone(cards: T[] | T, lostZone: CardList): void {
+  public toLostZone(cards: T[] | T, lostZone?: CardList): void {
     const cardsToMove = cards instanceof Array ? cards : [cards];
-    this.moveCardsTo(cardsToMove, lostZone);
+    const target = lostZone ?? this.lostZone;
+    if (target === undefined) {
+      throw new GameError(GameMessage.INVALID_GAME_STATE);
+    }
+    this.moveCardsTo(cardsToMove, target);
   }
 
   public moveToBottom(destination: CardList, count?: number): void {

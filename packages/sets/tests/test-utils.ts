@@ -116,6 +116,7 @@ export class TestUtils {
       cardLists.push(player.active.trainers);
       cardLists.push(player.deck);
       cardLists.push(player.discard);
+      cardLists.push(player.lostzone);
       cardLists.push(player.hand);
       cardLists.push(player.stadium);
       cardLists.push(player.supporter);

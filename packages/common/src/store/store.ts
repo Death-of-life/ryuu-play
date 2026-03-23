@@ -84,6 +84,7 @@ export class Store implements StoreLike {
   }
 
   public reduceEffect(state: State, effect: Effect): State {
+    state.players.forEach(player => player.refreshCardListTargets());
     state = this.propagateEffect(state, effect);
 
     if (effect.preventDefault === true) {
@@ -191,6 +192,8 @@ export class Store implements StoreLike {
     const stateBackup = deepClone(state, [ Card ]);
     this.promptItems.length = 0;
 
+    state.players.forEach(player => player.refreshCardListTargets());
+
     try {
       state = setupPhaseReducer(this, state, action);
       state = playCardReducer(this, state, action);
@@ -230,6 +233,7 @@ export class Store implements StoreLike {
       player.hand.cards.forEach(c => cards.push(c));
       player.deck.cards.forEach(c => cards.push(c));
       player.discard.cards.forEach(c => cards.push(c));
+      player.lostzone.cards.forEach(c => cards.push(c));
     }
     cards.sort(c => c.superType);
     cards.forEach(c => { state = c.reduceEffect(this, state, effect); });

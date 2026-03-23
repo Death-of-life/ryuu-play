@@ -167,8 +167,10 @@ function createPlayer(id: number, name: string): Player {
   player.active.energies.isPublic = true;
   player.active.trainers.isPublic = true;
   player.discard.isPublic = true;
+  player.lostzone.isPublic = true;
   player.stadium.isPublic = true;
   player.supporter.isPublic = true;
+  player.refreshCardListTargets();
   return player;
 }
 
@@ -197,6 +199,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
       const player = createPlayer(action.clientId, action.name);
       player.deck = CardList.fromList(action.deck);
       player.deck.isSecret = true;
+      player.refreshCardListTargets();
       player.deck.cards.forEach(c => {
         state.cardNames.push(c.fullName);
         c.id = state.cardNames.length - 1;
@@ -242,6 +245,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
 
         player.deck = CardList.fromList(deck);
         player.deck.isSecret = true;
+        player.refreshCardListTargets();
         player.deck.cards.forEach(c => {
           state.cardNames.push(c.fullName);
           c.id = state.cardNames.length - 1;
