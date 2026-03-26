@@ -35,12 +35,12 @@ export class Drakloak extends PokemonCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/433.png',
+    image_url: 'http://localhost:3000/api/v1/cards/17535/image',
   };
 
   public stage: Stage = Stage.STAGE_1;
 
-  public evolvesFrom = 'Dreepy';
+  public evolvesFrom = '多龙梅西亚';
 
   public cardTypes: CardType[] = [CardType.DRAGON];
 
@@ -54,18 +54,17 @@ export class Drakloak extends PokemonCard {
 
   public powers = [
     {
-      name: 'Recon Directive',
+      name: '侦察指令',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text:
-        'Once during your turn, you may look at the top 2 cards of your deck and put 1 of them into your hand. ' +
-        'Put the other card on the bottom of your deck.',
+        '在自己的回合可以使用1次。查看自己牌库上方2张卡牌，选择其中1张卡牌，加入手牌。将剩余的卡牌，放回牌库下方。',
     },
   ];
 
   public attacks = [
     {
-      name: 'Dragon Headbutt',
+      name: '龙之头击',
       cost: [CardType.FIRE, CardType.PSYCHIC],
       damage: '70',
       text: '',
@@ -74,9 +73,9 @@ export class Drakloak extends PokemonCard {
 
   public set: string = 'set_h';
 
-  public name: string = 'Drakloak';
+  public name: string = '多龙奇';
 
-  public fullName: string = 'Drakloak CSV8C';
+  public fullName: string = '多龙奇 CSV8C';
 
   public readonly RECON_DIRECTIVE_MARKER = 'RECON_DIRECTIVE_MARKER';
 

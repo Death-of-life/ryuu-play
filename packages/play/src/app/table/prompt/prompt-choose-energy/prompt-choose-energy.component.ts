@@ -21,6 +21,9 @@ export class PromptChooseEnergyComponent {
     this.message = prompt.message;
     this.promptId = prompt.id;
     this.cost = prompt.cost;
+    this.result = [];
+    this.isInvalid = false;
+    this.isSubmitting = false;
   }
 
   @Input() gameState: LocalGameState;
@@ -31,6 +34,7 @@ export class PromptChooseEnergyComponent {
   public message: string;
   public filter: FilterType;
   public isInvalid = false;
+  public isSubmitting = false;
   private energy: EnergyMap[] = [];
   private cost: CardType[];
   private result: number[] = [];
@@ -44,12 +48,22 @@ export class PromptChooseEnergyComponent {
   }
 
   public cancel() {
+    if (this.isSubmitting) {
+      return;
+    }
+
+    this.isSubmitting = true;
     const gameId = this.gameState.gameId;
     const id = this.promptId;
     this.gameService.resolvePrompt(gameId, id, null);
   }
 
   public confirm() {
+    if (this.isSubmitting) {
+      return;
+    }
+
+    this.isSubmitting = true;
     const gameId = this.gameState.gameId;
     const id = this.promptId;
     this.gameService.resolvePrompt(gameId, id, this.result);

@@ -11,6 +11,9 @@
   <a routerLink="/replays" mat-list-item>
     {{ 'MAIN_REPLAYS' | translate }}
   </a>
+  <a routerLink="/testing" mat-list-item>
+    {{ 'MAIN_TESTING' | translate }}
+  </a>
   <a routerLink="/message" mat-list-item>
     <span
       [matBadge]="unreadMessages$ | async"

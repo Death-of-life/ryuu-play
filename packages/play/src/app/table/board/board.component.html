@@ -15,6 +15,19 @@
 
 <div class="ptcg-board-container" [dropTarget]="boardTarget">
 
+  <div class="ptcg-board-lost-zone ptcg-board-lost-zone-top"
+    *ngIf="(topPlayer?.lostzone?.cards?.length || 0) > 0">
+    <ptcg-board-card
+      [value]="topPlayer?.lostzone"
+      [owner]="topPlayer?.id === clientId"
+      (cardClick)="onCardListClick($event.card, topPlayer?.lostzone)"
+      showCardCount="true">
+    </ptcg-board-card>
+    <ptcg-badge class="ptcg-board-lost-zone-label">
+      {{ 'TABLE_LOST_ZONE_LABEL' | translate }}
+    </ptcg-badge>
+  </div>
+
   <div class="ptcg-board-player upside-down">
     <!-- Top Active -->
     <div class="ptcg-board-row ptcg-board-active">
@@ -53,7 +66,8 @@
     <ptcg-board-deck
       [player]="topPlayer" [clientId]="clientId"
       (deckClick)="onDeckClick($event, topPlayer?.deck)"
-      (discardClick)="onCardListClick($event, topPlayer?.discard)">
+      (discardClick)="onCardListClick($event, topPlayer?.discard)"
+      (lostZoneClick)="onCardListClick($event, topPlayer?.lostzone)">
     </ptcg-board-deck>
 
     <!-- Top Prizes -->
@@ -114,7 +128,8 @@
     <ptcg-board-deck
       [player]="bottomPlayer" [clientId]="clientId"
       (deckClick)="onDeckClick($event, bottomPlayer?.deck)"
-      (discardClick)="onDiscardClick($event, bottomPlayer?.discard)">
+      (discardClick)="onDiscardClick($event, bottomPlayer?.discard)"
+      (lostZoneClick)="onCardListClick($event, bottomPlayer?.lostzone)">
     </ptcg-board-deck>
 
     <!-- Prizes -->
@@ -122,6 +137,19 @@
       [player]="bottomPlayer" [clientId]="clientId"
       (prizeClick)="onPrizeClick(bottomPlayer, $event)">
     </ptcg-board-prizes>
+  </div>
+
+  <div class="ptcg-board-lost-zone ptcg-board-lost-zone-bottom"
+    *ngIf="(bottomPlayer?.lostzone?.cards?.length || 0) > 0">
+    <ptcg-board-card
+      [value]="bottomPlayer?.lostzone"
+      [owner]="bottomPlayer?.id === clientId"
+      (cardClick)="onCardListClick($event.card, bottomPlayer?.lostzone)"
+      showCardCount="true">
+    </ptcg-board-card>
+    <ptcg-badge class="ptcg-board-lost-zone-label">
+      {{ 'TABLE_LOST_ZONE_LABEL' | translate }}
+    </ptcg-badge>
   </div>
 
 </div>

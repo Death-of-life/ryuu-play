@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>
+  {{ selected | localizedCardName }}
+</h2>
+
+<mat-dialog-content class="ptcg-card-variant-picker-popup">
+  <div class="ptcg-card-variant-picker-popup__variants">
+    <button
+      type="button"
+      class="ptcg-card-variant-picker-popup__variant"
+      *ngFor="let card of cards"
+      [class.selected]="card.fullName === selected.fullName"
+      (click)="select(card)">
+      <ptcg-card [card]="card"></ptcg-card>
+      <div class="meta">
+        <div class="rarity">{{ getRarityLabel(card) }}</div>
+        <div class="number">{{ getCollectionNumber(card) }}</div>
+      </div>
+    </button>
+  </div>
+
+  <ptcg-card-info-pane [card]="selected"></ptcg-card-info-pane>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <span class="ptcg-u-spacer"></span>
+  <button mat-raised-button (click)="close()">
+    {{ 'BUTTON_CLOSE' | translate }}
+  </button>
+  <button mat-raised-button color="primary" (click)="addToDeck()">
+    {{ 'BUTTON_ADD_TO_DECK' | translate }}
+  </button>
+</mat-dialog-actions>

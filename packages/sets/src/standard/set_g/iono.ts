@@ -29,7 +29,7 @@ export class Iono extends TrainerCard {
       name: '帕底亚训练家合影卡挂件套装&对战礼盒',
       salesDate: '2026-03-13'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/456/4.png'
+    image_url: 'http://localhost:3000/api/v1/cards/17271/image'
   };
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;

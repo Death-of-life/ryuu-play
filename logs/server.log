@@ -1,0 +1,144 @@
+
+> @ptcg/root@0.2.1 start
+> node start.js
+
+Application started on localhost:12021.
+Server listening on localhost:12021.
+
+> @ptcg/root@0.2.1 start
+> node start.js
+
+Application started on localhost:12021.
+Server listening on localhost:12021.
+
+> @ptcg/root@0.2.1 start
+> node start.js
+
+Application started on localhost:12021.
+Server listening on localhost:12021.
+Application started on localhost:12021.
+node:events:497
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EPERM: operation not permitted ::1:12021
+    at Server.setupListenHandle [as _listen2] (node:net:1918:21)
+    at listenInCluster (node:net:1997:12)
+    at GetAddrInfoReqWrap.callback (node:net:2206:7)
+    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:134:8)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1976:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '::1',
+  port: 12021
+}
+
+Node.js v22.22.0
+Application started on 127.0.0.1:12021.
+node:events:497
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EPERM: operation not permitted 127.0.0.1:12021
+    at Server.setupListenHandle [as _listen2] (node:net:1918:21)
+    at listenInCluster (node:net:1997:12)
+    at node:net:2206:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1976:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EPERM',
+  errno: -1,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 12021
+}
+
+Node.js v22.22.0
+Application started on 127.0.0.1:12021.
+Server listening on 127.0.0.1:12021.
+Application started on 127.0.0.1:12021.
+Server listening on 127.0.0.1:12021.
+Application started on 127.0.0.1:12021.
+Server listening on 127.0.0.1:12021.
+/Users/easygod/code/ryuu-play/packages/common/dist/cjs/game/cards/card-manager.js:33
+                    throw new Error('Multiple cards with the same name: ' + card.fullName);
+                    ^
+
+Error: Multiple cards with the same name: 长袖和服少女 126/128
+    at CardManager.defineFormat (/Users/easygod/code/ryuu-play/packages/common/dist/cjs/game/cards/card-manager.js:33:27)
+    at Object.<anonymous> (/Users/easygod/code/ryuu-play/init.js:26:13)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Module._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.require (node:internal/modules/cjs/loader:1463:12)
+    at require (node:internal/modules/helpers:147:16)
+
+Node.js v22.22.0
+/Users/easygod/code/ryuu-play/packages/common/dist/cjs/game/cards/card-manager.js:33
+                    throw new Error('Multiple cards with the same name: ' + card.fullName);
+                    ^
+
+Error: Multiple cards with the same name: 长袖和服少女 126/128
+    at CardManager.defineFormat (/Users/easygod/code/ryuu-play/packages/common/dist/cjs/game/cards/card-manager.js:33:27)
+    at Object.<anonymous> (/Users/easygod/code/ryuu-play/init.js:26:13)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Module._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Module.require (node:internal/modules/cjs/loader:1463:12)
+    at require (node:internal/modules/helpers:147:16)
+
+Node.js v22.22.0
+Application started on 127.0.0.1:12021.
+Server listening on 127.0.0.1:12021.
+Application started on 127.0.0.1:12021.
+node:events:497
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:12021
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at node:net:2206:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1976:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 12021
+}
+
+Node.js v22.22.0
+Application started on 127.0.0.1:12021.
+node:events:497
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 127.0.0.1:12021
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at node:net:2206:7
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1976:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  code: 'EADDRINUSE',
+  errno: -48,
+  syscall: 'listen',
+  address: '127.0.0.1',
+  port: 12021
+}
+
+Node.js v22.22.0

@@ -11,6 +11,7 @@ import { ReorderHandAction, ReorderBenchAction } from './actions/reorder-actions
 import { ResolvePromptAction } from './actions/resolve-prompt-action';
 import { State } from './state/state';
 import { StateLog, StateLogParam } from './state/state-log';
+import { StateUtils } from './state-utils';
 import { StoreHandler } from './store-handler';
 import { StoreLike } from './store-like';
 import { generateId, deepClone } from '../utils';
@@ -216,14 +217,22 @@ export class Store implements StoreLike {
 
   private propagateEffect(state: State, effect: Effect): State {
     const cards: Card[] = [];
+    const stadium = StateUtils.getStadiumCard(state);
+    const isJammingTowerActive = stadium?.name === '阻碍之塔';
+    const pushAttachedCard = (card: Card) => {
+      if (isJammingTowerActive) {
+        return;
+      }
+      cards.push(card);
+    };
     for (const player of state.players) {
       player.stadium.cards.forEach(c => cards.push(c));
       player.supporter.cards.forEach(c => cards.push(c));
-      player.active.trainers.cards.forEach(c => cards.push(c));
+      player.active.trainers.cards.forEach(c => pushAttachedCard(c));
       player.active.energies.cards.forEach(c => cards.push(c));
       player.active.pokemons.cards.forEach(c => cards.push(c));
       for (const bench of player.bench) {
-        bench.trainers.cards.forEach(c => cards.push(c));
+        bench.trainers.cards.forEach(c => pushAttachedCard(c));
         bench.energies.cards.forEach(c => cards.push(c));
         bench.pokemons.cards.forEach(c => cards.push(c));
       }

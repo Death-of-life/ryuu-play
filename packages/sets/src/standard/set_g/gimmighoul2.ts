@@ -29,7 +29,7 @@ export class Gimmighoul2 extends PokemonCard {
       commodityCode: 'MISSION05',
       salesDate: '2025-11-07'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/312/5.png'
+    image_url: 'http://localhost:3000/api/v1/cards/15986/image'
   };
 
   public stage: Stage = Stage.BASIC;

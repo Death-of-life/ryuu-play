@@ -19,6 +19,7 @@ import { RankingModule } from './ranking/ranking.module';
 import { ReplaysModule } from './replays/replays.module';
 import { SharedModule } from './shared/shared.module';
 import { TableModule } from './table/table.module';
+import { TestingModule } from './testing/testing.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { TableModule } from './table/table.module';
     DndMultiBackendModule,
     DndModule.forRoot({ backend: MultiBackend, options: HTML5ToTouch }),
     TableModule,
+    TestingModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

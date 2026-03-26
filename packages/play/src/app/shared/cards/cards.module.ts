@@ -11,11 +11,14 @@ import { CardInfoPaneComponent } from './card-info-pane/card-info-pane.component
 import { CardInfoPopupComponent } from './card-info-popup/card-info-popup.component';
 import { CardListPaneComponent } from './card-list-pane/card-list-pane.component';
 import { CardListPopupComponent } from './card-list-popup/card-list-popup.component';
+import { CardVariantPickerPopupComponent } from './card-variant-picker-popup/card-variant-picker-popup.component';
 import { CardPlaceholderDirective } from './card-placeholder/card-placeholder.directive';
 import { CardTextComponent } from './card-text/card-text.component';
 import { DropHighlightDirective } from './drop-highlight/drop-highlight.directive';
 import { EnergyComponent } from './energy/energy.component';
 import { ImageCacheModule } from '../image-cache/image-cache.module';
+import { LocalizedCardNamePipe } from './localized-card-name.pipe';
+import { LocalizedFormatNamePipe } from './localized-format-name.pipe';
 import { MaterialModule } from '../material.module';
 import { TrainerTypeComponent } from './trainer-type/trainer-type.component';
 import { HoverHighlightComponent } from './hover-highlight/hover-highlight.component';
@@ -36,10 +39,13 @@ import { HoverHighlightComponent } from './hover-highlight/hover-highlight.compo
         CardInfoPopupComponent,
         CardListPaneComponent,
         CardListPopupComponent,
+        CardVariantPickerPopupComponent,
         CardPlaceholderDirective,
         CardTextComponent,
         EnergyComponent,
         DropHighlightDirective,
+        LocalizedCardNamePipe,
+        LocalizedFormatNamePipe,
         TrainerTypeComponent,
         HoverHighlightComponent,
         CardInfoListPopupComponent,
@@ -48,7 +54,9 @@ import { HoverHighlightComponent } from './hover-highlight/hover-highlight.compo
         CardComponent,
         CardPlaceholderDirective,
         EnergyComponent,
-        DropHighlightDirective
+        DropHighlightDirective,
+        LocalizedCardNamePipe,
+        LocalizedFormatNamePipe
     ]
 })
 export class CardsModule { }

@@ -8,6 +8,7 @@ export interface DeckItem {
   count: number;
   pane: DeckEditPane;
   scanUrl: string;
+  variantCards?: Card[];
 }
 
 export interface LibraryItem extends DeckItem {

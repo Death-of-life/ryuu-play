@@ -12,9 +12,11 @@ export class BoardDeckComponent implements OnChanges {
   @Input() clientId: number;
   @Output() deckClick = new EventEmitter<Card>();
   @Output() discardClick = new EventEmitter<Card>();
+  @Output() lostZoneClick = new EventEmitter<Card>();
 
   public deck: CardList;
   public discard: CardList;
+  public lostZone: CardList;
   public isOwner: boolean;
 
   constructor() { }
@@ -23,10 +25,12 @@ export class BoardDeckComponent implements OnChanges {
     if (this.player) {
       this.deck = this.player.deck;
       this.discard = this.player.discard;
+      this.lostZone = this.player.lostzone;
       this.isOwner = this.player.id === this.clientId;
     } else {
       this.deck = undefined;
       this.discard = undefined;
+      this.lostZone = undefined;
       this.isOwner = false;
     }
   }
@@ -41,6 +45,10 @@ export class BoardDeckComponent implements OnChanges {
 
   public onDiscardClick(card: Card) {
     this.discardClick.next(card);
+  }
+
+  public onLostZoneClick(card: Card) {
+    this.lostZoneClick.next(card);
   }
 
 }

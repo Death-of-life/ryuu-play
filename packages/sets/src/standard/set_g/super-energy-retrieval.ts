@@ -113,7 +113,7 @@ export class SuperEnergyRetrieval extends TrainerCard {
       commodityCode: 'CSV3C',
       salesDate: '2025-05-16',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/270/314.png',
+    image_url: 'http://localhost:3000/api/v1/cards/13278/image',
   };
 
   public trainerType: TrainerType = TrainerType.ITEM;

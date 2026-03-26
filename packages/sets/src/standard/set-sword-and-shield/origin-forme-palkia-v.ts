@@ -82,7 +82,7 @@ export class OriginFormePalkiaV extends PokemonCard {
       name: '补充包 勇魅群星 勇',
       salesDate: '2024-06-18'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/182/90.png'
+    image_url: 'http://localhost:3000/api/v1/cards/9554/image'
   };
 
   public tags = [CardTag.POKEMON_V];

@@ -10,7 +10,7 @@ import { CheckPokemonTypeEffect, CheckPokemonStatsEffect,
 import { Weakness, Resistance } from '../card/pokemon-types';
 import { CardType, SpecialCondition, CardTag } from '../card/card-types';
 import { AttackEffect, UseAttackEffect, HealEffect, KnockOutEffect,
-  UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect } from '../effects/game-effects';
+  UsePowerEffect, PowerEffect, UseStadiumEffect, EvolveEffect, MoveDeckCardsToDiscardEffect } from '../effects/game-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { DealDamageEffect, ApplyWeaknessEffect } from '../effects/attack-effects';
 
@@ -180,6 +180,11 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
   if (effect instanceof HealEffect) {
     effect.target.damage = Math.max(0, effect.target.damage - effect.damage);
+    return state;
+  }
+
+  if (effect instanceof MoveDeckCardsToDiscardEffect) {
+    effect.source.moveCardsTo(effect.cards, effect.targetPlayer.discard);
     return state;
   }
 

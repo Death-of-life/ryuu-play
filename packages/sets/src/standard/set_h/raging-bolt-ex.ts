@@ -38,7 +38,7 @@ export class RagingBoltEx extends PokemonCard {
       name: '补充包 利刃猛醒',
       salesDate: '2026-01-16',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/324/419.png',
+    image_url: 'http://localhost:3000/api/v1/cards/16320/image',
   };
 
   public tags = [CardTag.POKEMON_EX];
@@ -55,26 +55,25 @@ export class RagingBoltEx extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Burst Roar',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
+      name: '飞溅咆哮',
+      cost: [CardType.COLORLESS],
       damage: '',
-      text: 'Discard your hand and draw 6 cards.',
+      text: '将自己的手牌全部放于弃牌区，从牌库上方抽取6张卡牌。',
     },
     {
-      name: 'Bellowing Thunder',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS],
-      damage: '70x',
+      name: '极雷轰',
+      cost: [CardType.LIGHTNING, CardType.FIGHTING],
+      damage: '70×',
       text:
-        'You may discard any amount of Basic Energy from your Pokemon. ' +
-        'This attack does 70 damage for each card you discarded in this way.',
+        '将自己场上宝可梦身上附着的任意数量的基本能量放于弃牌区，造成其张数×70伤害。',
     },
   ];
 
   public set: string = 'set_h';
 
-  public name: string = 'Raging Bolt ex';
+  public name: string = '猛雷鼓ex';
 
-  public fullName: string = 'Raging Bolt ex CSV7C';
+  public fullName: string = '猛雷鼓ex CSV7C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

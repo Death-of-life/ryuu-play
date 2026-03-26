@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  apiUrl: 'http://localhost:12021',
+  apiUrl: 'http://127.0.0.1:12021',
   timeout: 5000,
   production: false,
   apiVersion: 4,
@@ -11,8 +11,8 @@ export const environment = {
   allowServerChange: true,
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: false,
-  defaultLanguage: 'en',
-  languages: { en: 'English' }
+  defaultLanguage: 'zh',
+  languages: { en: 'English', zh: '中文' }
 };
 
 /*

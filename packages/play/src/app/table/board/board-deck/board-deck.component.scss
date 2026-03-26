@@ -4,12 +4,27 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin: 0 auto;
   max-width: map-get($ptcg-size, card);
   width: calc(50% - #{map-get($padding, small)});
 }
 
+.ptcg-board-zone {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: map-get($padding, tiny);
+}
+
 ptcg-board-card {
-  width: 100%
+  width: 100%;
+}
+
+.ptcg-board-zone-label {
+  white-space: nowrap;
+
+  :host-context(.upside-down) & {
+    transform: rotate(180deg);
+  }
 }

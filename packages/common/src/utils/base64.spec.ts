@@ -8,12 +8,15 @@ describe('Base64', () => {
     base64 = new Base64();
   });
 
-  it('Should throw error if string has UTF-8 characters', () => {
+  it('Should encode and decode UTF-8 characters', () => {
     //when
-    const foo = () => base64.encode('Żółcić gęślą jaźń');
+    const original = '丹瑜 Żółcić gęślą jaźń';
+    const encoded = base64.encode(original);
+    const decoded = base64.decode(encoded);
 
     //then
-    expect(foo).toThrowError('INVALID_CHARACTER_ERR: DOM Exception 5');
+    expect(encoded).toBe('5Li555GcIMW7w7PFgmNpxIcgZ8SZxZtsxIUgamHFusWE');
+    expect(decoded).toBe(original);
   });
 
   it('Should encode to base64', () => {

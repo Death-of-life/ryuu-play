@@ -19,14 +19,14 @@ describe('Dusclops set_h', () => {
     sim = TestUtils.createTestSimulator();
   });
 
-  it('uses Cursed Blast to place 5 damage counters, Knock Out itself, and give a Prize', () => {
+  it('uses 咒怨炸弹 to place 5 damage counters, Knock Out itself, and give a Prize', () => {
     const dusclops = new Dusclops();
 
     const { player, opponent } = TestUtils.getAll(sim);
     TestUtils.setActive(sim, [new TestPokemon()]);
     player.bench[0].pokemons.cards = [dusclops];
 
-    sim.dispatch(new UseAbilityAction(1, 'Cursed Blast', {
+    sim.dispatch(new UseAbilityAction(1, '咒怨炸弹', {
       player: PlayerType.BOTTOM_PLAYER,
       slot: SlotType.BENCH,
       index: 0,

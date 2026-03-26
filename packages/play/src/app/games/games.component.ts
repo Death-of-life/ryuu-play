@@ -1,4 +1,5 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { GameInfo, ClientInfo } from '@ptcg/common';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Observable, EMPTY, from } from 'rxjs';
@@ -37,6 +38,7 @@ export class GamesComponent implements OnInit {
     private deckService: DeckService,
     private dialog: MatDialog,
     private mainSevice: MainService,
+    private router: Router,
     private sessionService: SessionService,
     private translate: TranslateService
   ) {
@@ -112,7 +114,13 @@ export class GamesComponent implements OnInit {
         finalize(() => { this.loading = false; })
       )
       .subscribe({
-        next: () => {},
+        next: (game: GameInfo) => {
+          const localGameState = this.sessionService.session.gameStates
+            .find(state => state.gameId === game.gameId && state.deleted === false);
+          if (localGameState) {
+            this.router.navigate(['/table', localGameState.localId]);
+          }
+        },
         error: (error: ApiError) => {
           this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
         }

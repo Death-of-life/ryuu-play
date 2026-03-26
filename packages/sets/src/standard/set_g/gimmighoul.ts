@@ -52,7 +52,7 @@ export class Gimmighoul extends PokemonCard {
       commodityCode: 'CSV4C',
       salesDate: '2025-07-18'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/285/174.png'
+    image_url: 'http://localhost:3000/api/v1/cards/14302/image'
   };
 
   public stage: Stage = Stage.BASIC;

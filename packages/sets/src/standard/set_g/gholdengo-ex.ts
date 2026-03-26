@@ -40,7 +40,7 @@ export class GholdengoEx extends PokemonCard {
       commodityCode: 'CSV4C',
       salesDate: '2025-07-18'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/285/246.png'
+    image_url: 'http://localhost:3000/api/v1/cards/14328/image'
   };
 
   public tags = [CardTag.POKEMON_EX];

@@ -40,12 +40,12 @@ export class Dusknoir extends PokemonCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/563.png',
+    image_url: 'http://localhost:3000/api/v1/cards/17589/image',
   };
 
   public stage: Stage = Stage.STAGE_2;
 
-  public evolvesFrom = 'Dusclops';
+  public evolvesFrom = '彷徨夜灵';
 
   public cardTypes: CardType[] = [CardType.PSYCHIC];
 
@@ -59,28 +59,28 @@ export class Dusknoir extends PokemonCard {
 
   public powers = [
     {
-      name: 'Cursed Blast',
+      name: '咒怨炸弹',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text:
-        'Once during your turn, you may Knock Out this Pokemon. If you do, put 13 damage counters on 1 of your opponent\'s Pokemon.',
+        '在自己的回合可以使用1次，如果使用了，则令这只宝可梦【昏厥】。给对手的1只宝可梦身上，放置13个伤害指示物。',
     },
   ];
 
   public attacks = [
     {
-      name: 'Shadow Bind',
+      name: '影子束缚',
       cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
       damage: '150',
-      text: 'During your opponent\'s next turn, the Defending Pokemon can\'t retreat.',
+      text: '在下一个对手的回合，受到这个招式影响的宝可梦，无法撤退。',
     },
   ];
 
   public set: string = 'set_h';
 
-  public name: string = 'Dusknoir';
+  public name: string = '黑夜魔灵';
 
-  public fullName: string = 'Dusknoir CSV8C';
+  public fullName: string = '黑夜魔灵 CSV8C';
 
   public readonly CURSED_BLAST_MARKER = 'CURSED_BLAST_MARKER';
 

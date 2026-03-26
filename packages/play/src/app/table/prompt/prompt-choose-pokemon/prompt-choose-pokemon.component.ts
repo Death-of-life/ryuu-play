@@ -21,6 +21,7 @@ export class PromptChoosePokemonComponent implements OnChanges {
   public message: string;
   public blocked: CardTarget[];
   public isInvalid = false;
+  public isSubmitting = false;
 
   private min = 1;
   private max = 1;
@@ -34,12 +35,22 @@ export class PromptChoosePokemonComponent implements OnChanges {
   }
 
   public cancel() {
+    if (this.isSubmitting) {
+      return;
+    }
+
+    this.isSubmitting = true;
     const gameId = this.gameState.gameId;
     const id = this.promptId;
     this.gameService.resolvePrompt(gameId, id, null);
   }
 
   public confirm() {
+    if (this.isSubmitting) {
+      return;
+    }
+
+    this.isSubmitting = true;
     const gameId = this.gameState.gameId;
     const id = this.promptId;
     const result = this.pokemonData.getSelectedTargets();
@@ -66,7 +77,7 @@ export class PromptChoosePokemonComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    if (this.prompt && this.gameState && !this.promptId) {
+    if (this.prompt && this.gameState && this.promptId !== this.prompt.id) {
       const state = this.gameState.state;
       const prompt = this.prompt;
       const playerId = prompt.playerId;
@@ -80,6 +91,7 @@ export class PromptChoosePokemonComponent implements OnChanges {
       this.max = prompt.options.max;
       this.message = prompt.message;
       this.promptId = prompt.id;
+      this.isSubmitting = false;
       this.updateIsInvalid();
     }
   }

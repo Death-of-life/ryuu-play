@@ -1,6 +1,6 @@
 <div class="ptcg-games-table ptcg-u-padding">
 
-  <h3>Active games</h3>
+  <h3 translate>GAMES_ACTIVE_GAMES_TITLE</h3>
 
   <ptcg-content>
     <table mat-table [dataSource]="games$ | async" class="mat-elevation-z2">
@@ -49,7 +49,7 @@
       <ng-container matColumnDef="formatTag">
         <th mat-header-cell *matHeaderCellDef translate>LABEL_FORMAT</th>
         <td mat-cell *matCellDef="let row">
-          <ptcg-badge>{{ row.game.formatName || ('GAMES_FORMAT_UNLIMITED' | translate) }}</ptcg-badge>
+          <ptcg-badge>{{ row.game.formatName ? (row.game.formatName | localizedFormatName) : ('GAMES_FORMAT_UNLIMITED' | translate) }}</ptcg-badge>
         </td>
       </ng-container>
 

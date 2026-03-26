@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, inject, DestroyRef } from '@angular/core';
+import { Router } from '@angular/router';
 import { GameInfo, GameState } from '@ptcg/common';
 import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,6 +25,7 @@ export class GameActionsComponent implements OnInit {
   constructor(
     private alertService: AlertService,
     private gameService: GameService,
+    private router: Router,
     private sessionService: SessionService,
     private translate: TranslateService
   ) {
@@ -49,7 +51,13 @@ export class GameActionsComponent implements OnInit {
 
   public join() {
     this.gameService.join(this.game.gameId)
-      .subscribe(() => {}, () => {});
+      .subscribe((gameState) => {
+        if (gameState) {
+          this.router.navigate(['/table', gameState.localId], {
+            queryParams: { join: 1 }
+          });
+        }
+      }, () => {});
   }
 
   public async leave() {

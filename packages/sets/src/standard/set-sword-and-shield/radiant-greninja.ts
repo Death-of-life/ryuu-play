@@ -98,7 +98,7 @@ export class RadiantGreninja extends PokemonCard {
       linkType: 0,
       image: 'img/222/cover.png',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/222/33.png',
+    image_url: 'http://localhost:3000/api/v1/cards/10954/image',
   };
 
   public tags = [CardTag.RADIANT];

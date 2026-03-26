@@ -1,0 +1,151 @@
+import {
+  CardTag,
+  CheckHpEffect,
+  Effect,
+  EndTurnEffect,
+  GameError,
+  GameMessage,
+  PokemonCard,
+  State,
+  StateUtils,
+  StoreLike,
+  TrainerType,
+  UseTrainerInPlayEffect,
+} from '@ptcg/common';
+
+import { VariantTrainerCard, VariantTrainerSeed } from './variant-trainer-card';
+
+const VSTAR_POWER_USED_MARKER = 'DA_DI_FENG_YIN_SHI_USED_MARKER';
+const TURN_EFFECT_MARKER = 'DA_DI_FENG_YIN_SHI_TURN_MARKER';
+
+function isPokemonVLike(card: PokemonCard | undefined): boolean {
+  if (card === undefined) {
+    return false;
+  }
+
+  if (card.tags.includes(CardTag.POKEMON_V) || card.tags.includes(CardTag.POKEMON_VSTAR)) {
+    return true;
+  }
+
+  const rawData = card as any;
+  const labels = [
+    rawData.rawData?.raw_card?.details?.pokemonTypeLabel,
+    rawData.rawData?.api_card?.pokemonTypeLabel,
+  ];
+
+  return labels.some((label: unknown) => typeof label === 'string' && (
+    label.includes('宝可梦V')
+    || label.includes('宝可梦VMAX')
+  ));
+}
+
+const defaultSeed: VariantTrainerSeed = {
+  set: 'set_f',
+  name: '大地封印石',
+  fullName: '大地封印石 CS6bC',
+  text:
+    '宝可梦道具可以附着在自己的宝可梦身上。每只宝可梦身上只可以附着1张宝可梦道具，并保持附加状态。\n' +
+    '身上放有这张卡牌的「宝可梦V」，可以使用这个【VSTAR】力量。\n' +
+    '●●●　星耀重力\n' +
+    '在对手的所有「宝可梦V」身上放置伤害指示物，直到其剩余HP均变为「100」点为止。[对战中，己方的【VSTAR】力量只能使用1次。]\n' +
+    '在自己的回合可以使用任意张物品卡。',
+  trainerType: TrainerType.TOOL,
+  rawData: {
+    raw_card: {
+      id: 10578,
+      name: '大地封印石',
+      yorenCode: 'Y1106',
+      cardType: '2',
+      commodityCode: 'CS6bC',
+      details: {
+        regulationMarkText: 'F',
+        collectionNumber: '124/131',
+        rarityLabel: 'R☆★',
+        cardTypeLabel: '训练家',
+        trainerTypeLabel: '宝可梦道具',
+        specialCardLabel: null,
+        attributeLabel: null,
+        energyTypeLabel: null,
+        pokemonTypeLabel: null,
+        hp: null,
+        evolveText: null,
+        weakness: null,
+        resistance: null,
+        retreatCost: null,
+      },
+      image: '/api/v1/cards/10578/image',
+      ruleLines: [
+        '宝可梦道具可以附着在自己的宝可梦身上。每只宝可梦身上只可以附着1张宝可梦道具，并保持附加状态。',
+        '身上放有这张卡牌的「宝可梦V」，可以使用这个【VSTAR】力量。',
+        '●●●　星耀重力',
+        '在对手的所有「宝可梦V」身上放置伤害指示物，直到其剩余HP均变为「100」点为止。[对战中，己方的【VSTAR】力量只能使用1次。]',
+        '在自己的回合可以使用任意张物品卡。',
+      ],
+      attacks: [],
+      features: [],
+      illustratorNames: ['AYUMI ODASHIMA'],
+      pokemonCategory: null,
+      pokedexCode: null,
+      pokedexText: null,
+      height: null,
+      weight: null,
+      deckRuleLimit: null,
+    },
+    collection: {
+      id: 206,
+      commodityCode: 'CS6bC',
+      name: '补充包 碧海暗影 逐',
+      commodityNames: ['补充包 碧海暗影 逐'],
+    },
+    image_url: 'http://localhost:3000/api/v1/cards/10578/image',
+  },
+};
+
+function useTrainer(state: State, effect: UseTrainerInPlayEffect): State {
+  const player = effect.player;
+  const pokemon = effect.target.getPokemonCard();
+
+  if (!isPokemonVLike(pokemon)) {
+    throw new GameError(GameMessage.CANNOT_USE_POWER);
+  }
+
+  if (player.marker.hasMarker(VSTAR_POWER_USED_MARKER, effect.trainerCard)) {
+    throw new GameError(GameMessage.POWER_ALREADY_USED);
+  }
+
+  player.marker.addMarker(VSTAR_POWER_USED_MARKER, effect.trainerCard);
+  player.marker.addMarker(TURN_EFFECT_MARKER, effect.trainerCard);
+  return state;
+}
+
+export class DaDiFengYinShi extends VariantTrainerCard {
+  public useWhenInPlay = true;
+  public trainerType: TrainerType = TrainerType.TOOL;
+
+  constructor(seed: VariantTrainerSeed = defaultSeed) {
+    super(seed);
+    this.useWhenInPlay = true;
+    this.trainerType = TrainerType.TOOL;
+  }
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof UseTrainerInPlayEffect && effect.trainerCard === this) {
+      return useTrainer(state, effect);
+    }
+
+    if (effect instanceof CheckHpEffect) {
+      const opponent = StateUtils.getOpponent(state, effect.player);
+      if (opponent.marker.hasMarker(TURN_EFFECT_MARKER, this) && isPokemonVLike(effect.target.getPokemonCard())) {
+        effect.hp = 100;
+      }
+      return state;
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(TURN_EFFECT_MARKER, this)) {
+      effect.player.marker.removeMarker(TURN_EFFECT_MARKER, this);
+      return state;
+    }
+
+    return state;
+  }
+}

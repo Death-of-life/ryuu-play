@@ -9,7 +9,7 @@
       <mat-label translate>LABEL_FORMAT</mat-label>
       <mat-select [(value)]="format" (selectionChange)="onFormatChange($event.value)">
         <mat-option *ngFor="let option of formats" [value]="option">
-          {{ option.name || ('GAMES_ALL_CARDS_ALLOWED' | translate) }}
+          {{ option.name ? (option.name | localizedFormatName) : ('GAMES_ALL_CARDS_ALLOWED' | translate) }}
         </mat-option>
       </mat-select>
     </mat-form-field>

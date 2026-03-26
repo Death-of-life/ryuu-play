@@ -1,0 +1,47 @@
+<ptcg-content>
+  <div class="ptcg-testing-page">
+    <div class="ptcg-testing-header">
+      <h2 translate>TESTING_TITLE</h2>
+      <p translate>TESTING_DESCRIPTION</p>
+    </div>
+
+    <mat-card class="ptcg-testing-card">
+      <mat-card-content>
+        <form #form="ngForm" autocomplete="off">
+          <mat-form-field>
+            <mat-label translate>LABEL_FORMAT</mat-label>
+            <mat-select [(value)]="format" (selectionChange)="onFormatChange($event.value)">
+              <mat-option *ngFor="let option of formats" [value]="option">
+                {{ option.name ? (option.name | localizedFormatName) : ('GAMES_ALL_CARDS_ALLOWED' | translate) }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label translate>TESTING_PLAYER_DECK</mat-label>
+            <mat-select [(value)]="playerDeck">
+              <mat-option *ngFor="let option of decks" [value]="option">
+                {{ option.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label translate>TESTING_BOT_DECK</mat-label>
+            <mat-select [(value)]="botDeck">
+              <mat-option *ngFor="let option of decks" [value]="option">
+                {{ option.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions align="end">
+        <button mat-raised-button color="primary" (click)="createGame()" [disabled]="loading || !playerDeck || !botDeck">
+          {{ 'TESTING_CREATE_GAME' | translate }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ptcg-content>

@@ -139,7 +139,7 @@ export class SecretBox extends TrainerCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/479.png'
+    image_url: 'http://localhost:3000/api/v1/cards/17553/image'
   };
 
   public trainerType: TrainerType = TrainerType.ITEM;

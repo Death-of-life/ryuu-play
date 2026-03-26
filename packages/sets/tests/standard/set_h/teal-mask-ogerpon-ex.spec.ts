@@ -20,10 +20,10 @@ describe('Teal Mask Ogerpon ex set_h', () => {
     const defendingPokemon = new TestPokemon();
 
     const { opponent } = TestUtils.getAll(sim);
-    TestUtils.setActive(sim, [tealMaskOgerponEx], [CardType.GRASS, CardType.GRASS, CardType.COLORLESS]);
+    TestUtils.setActive(sim, [tealMaskOgerponEx], [CardType.GRASS, CardType.GRASS, CardType.GRASS]);
     TestUtils.setDefending(sim, [defendingPokemon], [CardType.WATER, CardType.WATER]);
 
-    sim.dispatch(new AttackAction(1, 'Myriad Leaf Shower'));
+    sim.dispatch(new AttackAction(1, '万叶阵雨'));
 
     expect(opponent.active.damage).toEqual(180);
   });

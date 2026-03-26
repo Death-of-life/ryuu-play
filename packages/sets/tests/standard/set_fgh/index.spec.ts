@@ -1,0 +1,57 @@
+import { SuperType, TrainerType, EnergyType } from '@ptcg/common';
+
+import { setFgh } from '../../../src/standard/set_fgh';
+
+type VariantRawData = {
+  variant_group_key?: string;
+  variant_group_size?: number;
+};
+
+describe('set_fgh', () => {
+  it('contains trainer, energy, and explicitly added pokemon cards', () => {
+    for (const card of setFgh) {
+      expect([SuperType.TRAINER, SuperType.ENERGY, SuperType.POKEMON]).toContain(card.superType);
+    }
+
+    expect(setFgh.length).toBeGreaterThan(338);
+  });
+
+  it('stores variant grouping metadata while keeping all card faces', () => {
+    const groups = new Map<string, typeof setFgh>();
+
+    for (const card of setFgh) {
+      const rawData = (card.rawData || {}) as VariantRawData;
+      const groupKey = rawData.variant_group_key || card.fullName;
+      const group = groups.get(groupKey) || [];
+      group.push(card);
+      groups.set(groupKey, group);
+    }
+
+    expect(groups.size).toBe(291);
+
+    const nestBallGroup = Array.from(groups.values()).find(group =>
+      group.some(card => card.name === '巢穴球')
+    );
+    const doubleTurboGroup = Array.from(groups.values()).find(group =>
+      group.some(card => card.name === '双重涡轮能量')
+    );
+
+    expect(nestBallGroup).toBeDefined();
+    expect(nestBallGroup!.length).toBeGreaterThan(1);
+    expect(
+      new Set(nestBallGroup!.map(card => ((card.rawData || {}) as VariantRawData).variant_group_size)).size
+    ).toBe(1);
+
+    expect(doubleTurboGroup).toBeDefined();
+    expect(doubleTurboGroup!.length).toBeGreaterThan(1);
+    expect(doubleTurboGroup!.every(card => card.superType === SuperType.ENERGY)).toBe(true);
+
+    const professorResearchGroup = Array.from(groups.values()).find(group =>
+      group.some(card => card.name === '博士的研究')
+    );
+
+    expect(professorResearchGroup).toBeDefined();
+    expect(professorResearchGroup!.some(card => (card as any).trainerType === TrainerType.SUPPORTER)).toBe(true);
+    expect(doubleTurboGroup!.some(card => (card as any).energyType === EnergyType.SPECIAL)).toBe(true);
+  });
+});

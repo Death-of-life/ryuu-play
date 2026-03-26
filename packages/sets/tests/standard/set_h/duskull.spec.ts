@@ -19,7 +19,7 @@ describe('Duskull set_h', () => {
     sim = TestUtils.createTestSimulator();
   });
 
-  it('puts up to 3 Duskull from discard onto the Bench with Soul Transfer', () => {
+  it('puts up to 3 夜巡灵 from discard onto the Bench with 渡魂', () => {
     const onBench = new Duskull();
     const recoveredA = new Duskull();
     const recoveredB = new Duskull();
@@ -29,7 +29,7 @@ describe('Duskull set_h', () => {
     player.bench[0].pokemons.cards = [onBench];
     player.discard.cards = [recoveredA, recoveredB];
 
-    sim.dispatch(new UseAbilityAction(1, 'Soul Transfer', {
+    sim.dispatch(new UseAbilityAction(1, '渡魂', {
       player: PlayerType.BOTTOM_PLAYER,
       slot: SlotType.BENCH,
       index: 0,

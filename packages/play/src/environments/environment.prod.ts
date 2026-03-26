@@ -7,6 +7,6 @@ export const environment = {
   allowServerChange: false,
   refreshTokenInterval: 60 * 60 * 1000,
   enableImageCache: false,
-  defaultLanguage: 'en',
-  languages: { en: 'English' }
+  defaultLanguage: 'zh',
+  languages: { en: 'English', zh: '中文' }
 };

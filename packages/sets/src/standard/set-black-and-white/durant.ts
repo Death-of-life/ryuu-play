@@ -2,6 +2,7 @@ import {
   AttackEffect,
   CardType,
   Effect,
+  MoveDeckCardsToDiscardEffect,
   PlayerType,
   PokemonCard,
   Stage,
@@ -56,7 +57,10 @@ export class Durant extends PokemonCard {
         }
       });
 
-      opponent.deck.moveTo(opponent.discard, durantsInPlay);
+      state = store.reduceEffect(
+        state,
+        new MoveDeckCardsToDiscardEffect(player, opponent, opponent.deck, opponent.deck.top(durantsInPlay))
+      );
     }
 
     return state;

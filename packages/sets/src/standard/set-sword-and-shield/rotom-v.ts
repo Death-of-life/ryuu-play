@@ -38,7 +38,7 @@ export class RotomV extends PokemonCard {
       name: '强化包 胜象星引',
       salesDate: '2024-11-15',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/222/38.png',
+    image_url: 'http://localhost:3000/api/v1/cards/10957/image',
   };
 
   public tags = [CardTag.POKEMON_V];

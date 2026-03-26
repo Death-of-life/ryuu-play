@@ -35,17 +35,27 @@ export function deepCompare(x: any, y: any): boolean {
   return true;
 }
 
-export function deepIterate(source: any, callback: (holder: any, key: string, value: any) => void): void {
+export function deepIterate(
+  source: any,
+  callback: (holder: any, key: string, value: any) => void,
+  visited = new Set<any>()
+): void {
   if (source === null) { return; }
+  if (source instanceof Object) {
+    if (visited.has(source)) {
+      return;
+    }
+    visited.add(source);
+  }
 
   if (source instanceof Array) {
-    source.forEach((item: any) => deepIterate(item, callback));
+    source.forEach((item: any) => deepIterate(item, callback, visited));
   }
 
   if (source instanceof Object) {
     for (const key in source) {
       if (Object.prototype.hasOwnProperty.call(source, key)) {
-        deepIterate(source[key], callback);
+        deepIterate(source[key], callback, visited);
         callback(source, key, source[key]);
       }
     }
@@ -67,7 +77,7 @@ export function deepClone(source: any, ignores: Function[] = [], refMap: {s: Obj
     if (ref !== undefined) {
       return ref.d;
     }
-    const dest = Object.create(source);
+    const dest = Object.create(Object.getPrototypeOf(source));
     refMap.push({s: source, d: dest});
     for (const key in source) {
       if (Object.prototype.hasOwnProperty.call(source, key)) {

@@ -3,6 +3,7 @@ import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
+import { DisplayTextService } from '../../i18n/display-text.service';
 
 export interface CardInfoPaneOptions {
   enableAbility?: {
@@ -41,7 +42,8 @@ export class CardInfoPaneComponent implements OnChanges {
   public TrainerType = TrainerType;
 
   constructor(
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public displayText: DisplayTextService
   ) { }
 
   public clickAction(action: CardInfoPaneAction) {

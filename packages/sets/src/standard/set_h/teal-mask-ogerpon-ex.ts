@@ -41,10 +41,10 @@ export class TealMaskOgerponEx extends PokemonCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/79.png'
+    image_url: 'http://localhost:3000/api/v1/cards/17405/image'
   };
 
-  public tags = [CardTag.POKEMON_EX];
+  public tags = [CardTag.POKEMON_EX, CardTag.TERA];
 
   public stage: Stage = Stage.BASIC;
 
@@ -58,29 +58,28 @@ export class TealMaskOgerponEx extends PokemonCard {
 
   public powers = [
     {
-      name: 'Teal Dance',
+      name: '碧草之舞',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
       text:
-        'Once during your turn, you may attach a Basic G Energy card from your hand to this Pokemon. ' +
-        'If you attached Energy to a Pokemon in this way, draw a card.',
+        '在自己的回合可以使用1次。选择自己手牌中的1张「基本【草】能量」，附着于这只宝可梦身上。然后，从自己牌库上方抽取1张卡牌。',
     }
   ];
 
   public attacks = [
     {
-      name: 'Myriad Leaf Shower',
-      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS],
+      name: '万叶阵雨',
+      cost: [CardType.GRASS, CardType.GRASS, CardType.GRASS],
       damage: '30+',
-      text: 'This attack does 30 more damage for each Energy attached to both Active Pokemon.',
+      text: '追加造成双方战斗宝可梦身上附着的能量数量×30伤害。',
     },
   ];
 
   public set: string = 'set_h';
 
-  public name: string = 'Teal Mask Ogerpon ex';
+  public name: string = '厄诡椪 碧草面具ex';
 
-  public fullName: string = 'Teal Mask Ogerpon ex CSV8C';
+  public fullName: string = '厄诡椪 碧草面具ex CSV8C';
 
   public readonly TEAL_DANCE_MARKER = 'TEAL_DANCE_MARKER';
 

@@ -19,7 +19,7 @@ describe('Dragapult ex set_h', () => {
     sim = TestUtils.createTestSimulator();
   });
 
-  it('places 6 damage counters on opponent Benched Pokemon with Phantom Dive', () => {
+  it('places 6 damage counters on opponent Benched Pokemon with 幻影潜袭', () => {
     const dragapultEx = new DragapultEx();
     const benchedPokemon = new TestPokemon();
 
@@ -28,7 +28,7 @@ describe('Dragapult ex set_h', () => {
 
     TestUtils.setActive(sim, [dragapultEx], [CardType.FIRE, CardType.PSYCHIC]);
 
-    sim.dispatch(new AttackAction(1, 'Phantom Dive'));
+    sim.dispatch(new AttackAction(1, '幻影潜袭'));
 
     const putDamagePrompt = TestUtils.getLastPrompt(sim) as PutDamagePrompt;
     expect(putDamagePrompt).toBeTruthy();

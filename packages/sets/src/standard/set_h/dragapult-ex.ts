@@ -92,14 +92,14 @@ export class DragapultEx extends PokemonCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/436.png',
+    image_url: 'http://localhost:3000/api/v1/cards/17536/image',
   };
 
-  public tags = [CardTag.POKEMON_EX];
+  public tags = [CardTag.POKEMON_EX, CardTag.TERA];
 
   public stage: Stage = Stage.STAGE_2;
 
-  public evolvesFrom = 'Drakloak';
+  public evolvesFrom = '多龙奇';
 
   public cardTypes: CardType[] = [CardType.DRAGON];
 
@@ -113,24 +113,24 @@ export class DragapultEx extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Jet Headbutt',
+      name: '喷射头击',
       cost: [CardType.COLORLESS],
       damage: '70',
       text: '',
     },
     {
-      name: 'Phantom Dive',
+      name: '幻影潜袭',
       cost: [CardType.FIRE, CardType.PSYCHIC],
       damage: '200',
-      text: 'Put 6 damage counters on your opponent\'s Benched Pokemon in any way you like.',
+      text: '将6个伤害指示物，以任意方式放置于对手的备战宝可梦身上。',
     },
   ];
 
   public set: string = 'set_h';
 
-  public name: string = 'Dragapult ex';
+  public name: string = '多龙巴鲁托ex';
 
-  public fullName: string = 'Dragapult ex CSV8C';
+  public fullName: string = '多龙巴鲁托ex CSV8C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

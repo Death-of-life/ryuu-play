@@ -1,4 +1,5 @@
 export * from './avatars';
+export * from './card-progress';
 export * from './cards';
 export * from './decks';
 export * from './game';
@@ -9,3 +10,4 @@ export * from './profile';
 export * from './ranking';
 export * from './replays';
 export * from './reset-password';
+export * from './testing';

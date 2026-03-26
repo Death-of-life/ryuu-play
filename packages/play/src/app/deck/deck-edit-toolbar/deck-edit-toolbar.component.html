@@ -28,7 +28,7 @@
     <mat-form-field floatLabel="never" appearance="legacy" *ngIf="formatNames.length > 0">
       <mat-select [value]="filterValue.formatName" (selectionChange)="onFormatChange($event)">
         <mat-option *ngFor="let formatName of formatNames" [value]="formatName">
-          {{ formatName }}
+          {{ formatName | localizedFormatName }}
         </mat-option>
         <mat-option value="">{{ 'DECK_EDIT_ALL_FORMATS' | translate }}</mat-option>
       </mat-select>

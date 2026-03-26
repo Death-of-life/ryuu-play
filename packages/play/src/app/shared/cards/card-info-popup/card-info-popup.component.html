@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>
   <span *ngIf="facedown" translate>CARDS_UNKNOWN</span>
-  <span *ngIf="!facedown">{{ $any(card).rawData?.raw_card?.name || card.fullName }}</span>
+  <span *ngIf="!facedown">{{ card | localizedCardName }}</span>
 </h2>
 
 <mat-dialog-content>

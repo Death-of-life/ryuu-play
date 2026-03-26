@@ -29,7 +29,7 @@ describe('Drakloak set_h', () => {
     player.hand.cards = [];
     player.deck.cards = [topA, topB, third];
 
-    sim.dispatch(new UseAbilityAction(1, 'Recon Directive', {
+    sim.dispatch(new UseAbilityAction(1, '侦察指令', {
       player: PlayerType.BOTTOM_PLAYER,
       slot: SlotType.ACTIVE,
       index: 0,
@@ -44,7 +44,7 @@ describe('Drakloak set_h', () => {
     expect(player.deck.cards).toEqual([third, topB]);
 
     expect(() => {
-      sim.dispatch(new UseAbilityAction(1, 'Recon Directive', {
+      sim.dispatch(new UseAbilityAction(1, '侦察指令', {
         player: PlayerType.BOTTOM_PLAYER,
         slot: SlotType.ACTIVE,
         index: 0,

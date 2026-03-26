@@ -29,6 +29,7 @@ export class TableComponent implements OnInit {
   public loading: boolean;
   public waiting: boolean;
   private gameId: number;
+  private autoJoinPromptRequested = false;
   private destroyRef = inject(DestroyRef);
 
   constructor(
@@ -52,6 +53,7 @@ export class TableComponent implements OnInit {
       )
       .subscribe(([paramMap, gameStates, clientId]) => {
         this.gameId = parseInt(paramMap.get('gameId'), 10);
+        this.autoJoinPromptRequested = false;
         this.gameState = gameStates.find(state => state.localId === this.gameId);
         this.updatePlayers(this.gameState, clientId);
       });
@@ -159,6 +161,35 @@ export class TableComponent implements OnInit {
         && state.phase === GamePhase.PLAYER_TURN;
       this.waiting = (notMyTurn || waitingForOthers) && !waitingForMe && !isObserver;
     }
+
+    this.autoOpenDeckSelection(gameState, clientId);
+  }
+
+  private autoOpenDeckSelection(gameState: LocalGameState, clientId: number) {
+    const shouldAutoJoin = this.route.snapshot.queryParamMap.get('join') === '1';
+    if (!shouldAutoJoin || this.autoJoinPromptRequested || !gameState?.state) {
+      return;
+    }
+
+    const state = gameState.state;
+    const isAlreadyPlaying = state.players.some(p => p.id === clientId);
+    const canChooseDeckNow = !gameState.replay
+      && state.phase === GamePhase.WAITING_FOR_PLAYERS
+      && state.players.length === 1
+      && !isAlreadyPlaying;
+
+    if (!canChooseDeckNow) {
+      return;
+    }
+
+    this.autoJoinPromptRequested = true;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { join: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true
+    });
+    this.play();
   }
 
 }

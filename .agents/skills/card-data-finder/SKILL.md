@@ -1,27 +1,28 @@
 ---
 name: card-data-finder
-description: 在新增卡牌时，从 PTCG-CHS 数据集中检索卡牌对象与 GitHub 图床链接。只要用户提到"查卡图""查卡牌数据""从 ptcg_chs_infos.json 匹配卡牌""多个候选让我选"，都应使用此 skill。
+description: 在新增卡牌时，从本地 PTCG 简中数据库 API 检索卡牌对象、中文描述与本地图片地址。只要用户提到"查卡图""查卡牌数据""从本地数据库匹配卡牌""多个候选让我选"，都应使用此 skill。
 ---
 
 # Card Data Finder
 
-这个 skill 用于通过脚本更新远程数据集并检索卡牌，返回：
+这个 skill 用于通过脚本同步本地数据库索引并检索卡牌，返回：
 
 1) 匹配到的原始卡牌对象（JSON）
-2) 对应 GitHub 图床 URL（`raw.githubusercontent.com`）
+2) 对应本地图片 URL（`http://localhost:3000/api/v1/cards/<id>/image`）
+3) 同逻辑多卡图候选，用于补充 variant 卡面
 
 ## 数据来源
 
-### PTCG-CHS 数据集（中文卡图）
-- 元数据：`https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/ptcg_chs_infos.json`
-- 图片路径来源于对象中的 `image` 字段，最终 URL 规则：
-  - `https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/<image>`
+### 本地 PTCG 简中数据库 API
+- 文档入口：`http://127.0.0.1:3000/api/docs`
+- 卡牌列表：`http://localhost:3000/api/v1/cards`
+- 卡牌详情：`http://localhost:3000/api/v1/cards/:id`
+- 图片地址：详情里的 `imageUrl` 字段，拼接到 `http://localhost:3000`
 
-### pokemon-tcg-data（英文卡数据）
-- 数据源：`https://api.pokemontcg.io/v2/cards`
-- 可通过 npm 包 `pokemon-tcg-data` 获取
-- **仅用于获取英文名字(用于文件和class命名)和 `subtypes` 字段**（如 Stage 2、Tera、Radiant、ex 等）
-- 检索时直接用 npm 包查询，匹配 `name` 字段获取卡牌完整信息
+说明：
+- `search` 走本地缓存索引。
+- `--select` 会进一步拉取详情接口，拿到攻击、特性、规则文本、弱点、抗性、撤退等字段。
+- skill 返回的 `selected.card` 已经整理成适合 `packages/sets` 里 `rawData` 直接复用的结构。
 
 ## 脚本入口
 
@@ -33,34 +34,58 @@ description: 在新增卡牌时，从 PTCG-CHS 数据集中检索卡牌对象与
 # 1) 更新本地缓存数据
 python3 .agents/skills/card-data-finder/scripts/resolve_card.py update
 
-# 2) 搜索卡牌（返回候选，支持中英文名）
-python3 .agents/skills/card-data-finder/scripts/resolve_card.py search "charizard"
+# 2) 搜索卡牌（返回候选，支持中文名 / yorenCode / 编号 / id）
+python3 .agents/skills/card-data-finder/scripts/resolve_card.py search "败露球菇ex"
 
 # 3) 直接选择某个候选并返回对象
-python3 .agents/skills/card-data-finder/scripts/resolve_card.py search "charizard" --select 1
+python3 .agents/skills/card-data-finder/scripts/resolve_card.py search "Y1441" --select 1
 ```
 
 ## 检索策略
 
-1. **优先英文名搜索**：用户提交名称时，先尝试搜索对应的英文名。
-2. **模糊匹配**：支持中文名、英文名、卡牌编号、yoren_code 等多种匹配方式。
-3. **如果不确定英文名**：可以询问用户是否知道英文名称。
+1. **优先本地中文数据**：用户提交名称时，直接按中文名、`yorenCode`、编号、本地 id 检索。
+2. **模糊匹配**：支持中文名、卡牌编号、`yorenCode`、合集名等多种匹配方式。
+3. **variant 匹配**：如果用户要“补卡图”“补同逻辑多印次”，则在同一个 `regulationMark` 下继续比对同逻辑卡。
+4. **只有在需要类名 / 文件名时**，再由实现者自行决定英文转写，不依赖外部英文数据源。
+
+### 同逻辑卡图匹配规则
+
+给 `Pokemon / Trainer / Energy` 补卡图时，优先按以下规则匹配：
+
+1. 同一 `regulationMarkText`
+2. 同名
+3. 若有 `yorenCode`，优先使用同一 `yorenCode`
+4. 若 `yorenCode` 缺失，再按逻辑字段比对：
+   - `Pokemon`：`hp`、`evolveText`、`attributeLabel`、`ruleLines`、`features`、`attacks`
+   - `Trainer`：`trainerType`、`text`
+   - `Energy`：`energyType`、`text`
+
+如果命中了多张同逻辑卡：
+- 必须把所有候选的 `id / collection_number / rarity_label / image_url` 整理出来
+- 供 `card-creator` 作为多卡图 variant seed 使用
+- 不要把它们当成多张不同逻辑卡
 
 ## 标准流程
 
-1. 执行 `update`，确保本地缓存是最新。
+1. 执行 `update`，确保本地 API 索引缓存是最新。
 2. 执行 `search <query>` 获取候选。
 3. 若 `total_matches == 0`：告知用户未命中，并建议补充关键信息（系列、编号、中文名/英文名）。
 4. 若 `total_matches == 1`：直接返回 `selected.card` 与 `selected.image_url`。
 5. 若 `total_matches > 1`：
-   - 先把候选提炼成编号列表给用户选（至少展示 index、name、collection_name、collection_number、image_url）。
-   - 用户选择后，再返回对应 `card` 对象与 `image_url`。
+   - 先把候选提炼成编号列表给用户选。
+   - 至少展示：`index`、`name`、`collection_name`、`collection_number`、`regulation_mark_text`、`image_url`。
+   - 用户选择后，再返回对应 `selected.api_card`、`selected.card` 与 `image_url`。
+6. 若用户明确要“补卡图”：
+   - 不只返回 1 张
+   - 还要把同逻辑 variant 一并列出
+   - 明确标出哪些是 `RR / SR / SAR / UR / AR / C★ / C★★` 等版本
 
 ## 输出要求
 
 - 不下载图片文件。
-- 必须给出可直接访问的 GitHub 图床 URL。
-- 返回对象要来自数据集记录（可带额外字段用于上下文，但不要伪造原字段）。
+- 必须给出可直接访问的本地图片 URL。
+- 返回对象要来自本地数据库 API；允许额外补一个 `selected.card` 作为 `rawData` 适配结构，但不要伪造 `selected.api_card` 原字段。
+- 若任务是“补卡图”，输出里必须包含 variant 列表，而不是只给基础版本。
 
 ## 参考文档
 

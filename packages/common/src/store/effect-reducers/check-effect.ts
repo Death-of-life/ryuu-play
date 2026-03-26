@@ -40,7 +40,22 @@ function findKoPokemons(store: StoreLike, state: State): PokemonItem[] {
 }
 
 function handleBenchSizeChange(store: StoreLike, state: State, benchSize: number): State {
-  state.players.forEach(player => {
+  const players = state.players.slice();
+  const stadiumOwner = state.players.find(player => player.stadium.cards[0]?.name === '崩塌的竞技场');
+
+  if (stadiumOwner !== undefined) {
+    players.sort((a, b) => {
+      if (a === stadiumOwner) {
+        return -1;
+      }
+      if (b === stadiumOwner) {
+        return 1;
+      }
+      return 0;
+    });
+  }
+
+  players.forEach(player => {
     // Add empty slots if bench is smaller
     while (player.bench.length < benchSize) {
       const bench = new PokemonSlot();

@@ -13,6 +13,8 @@ import {
   TrainerType,
 } from '@ptcg/common';
 
+import { isProtectedFromOpponentSupporter } from '../../common/trainers/supporter-target-protection';
+
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -22,13 +24,22 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
+  const blocked = opponent.bench
+    .map((slot, index) => ({ slot, index }))
+    .filter(({ slot }) => slot.getPokemonCard() === undefined || isProtectedFromOpponentSupporter(state, player.id, slot))
+    .map(({ index }) => ({ player: PlayerType.TOP_PLAYER, slot: SlotType.BENCH, index }));
+
   return store.prompt(
     state,
     new ChoosePokemonPrompt(player.id, GameMessage.CHOOSE_POKEMON_TO_SWITCH, PlayerType.TOP_PLAYER, [SlotType.BENCH], {
       allowCancel: false,
+      blocked,
     }),
     result => {
       const cardList = result[0];
+      if (isProtectedFromOpponentSupporter(state, player.id, cardList)) {
+        throw new GameError(GameMessage.INVALID_TARGET);
+      }
       opponent.switchPokemon(cardList);
     }
   );

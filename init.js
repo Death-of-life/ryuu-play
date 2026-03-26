@@ -2,7 +2,7 @@ const { BotManager, SimpleBot, config } = require('@ptcg/server');
 const { CardManager } = require('@ptcg/common');
 
 // Backend config
-config.backend.address = 'localhost';
+config.backend.address = '127.0.0.1';
 config.backend.port = 12021;
 config.backend.avatarsDir = __dirname + '/avatars';
 config.backend.webUiDir = __dirname + '/packages/play/dist/ptcg-play';
@@ -19,32 +19,13 @@ config.sets.scansDir = __dirname + '/scans';
 config.sets.scansDownloadUrl = 'https://ptcg.ryuu.eu/scans'; // Deprecated: missing scans are not downloaded at startup
 
 // Define available sets
-const { baseSets, exSets, standardSets } = require('@ptcg/sets');
+const { standardSets } = require('@ptcg/sets');
 
 const cardManager = CardManager.getInstance();
 
 cardManager.defineFormat('Standard', [
-  standardSets.setDiamondAndPearl,
-  standardSets.setG,
   standardSets.setH,
-  standardSets.setOp9,
-  standardSets.setHgss,
-  standardSets.setBlackAndWhite,
-  standardSets.setBlackAndWhite2,
-  standardSets.setBlackAndWhite3,
-  standardSets.setBlackAndWhite4,
-  standardSets.setSwordAndShield
-]);
-
-cardManager.defineFormat('EX Sets', [
-  exSets.setRubyAndSapphire,
-  exSets.setSandstorm
-]);
-
-cardManager.defineFormat('Base Sets', [
-  baseSets.setBase,
-  baseSets.setJungle,
-  baseSets.setFossil
+  standardSets.setFgh,
 ]);
 
 // Define bots

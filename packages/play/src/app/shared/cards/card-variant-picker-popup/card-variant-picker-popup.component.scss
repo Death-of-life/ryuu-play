@@ -1,0 +1,43 @@
+.ptcg-card-variant-picker-popup {
+  display: grid;
+  grid-template-columns: minmax(300px, 420px) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.ptcg-card-variant-picker-popup__variants {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: 12px;
+  max-height: 70vh;
+  overflow: auto;
+  padding-right: 8px;
+}
+
+.ptcg-card-variant-picker-popup__variant {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: inherit;
+  cursor: pointer;
+  padding: 8px;
+  text-align: left;
+}
+
+.ptcg-card-variant-picker-popup__variant.selected {
+  border-color: #64b5f6;
+  box-shadow: 0 0 0 1px rgba(100, 181, 246, 0.35);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+@media (max-width: 1100px) {
+  .ptcg-card-variant-picker-popup {
+    grid-template-columns: 1fr;
+  }
+}

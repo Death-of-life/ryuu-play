@@ -32,7 +32,7 @@ export class LegacyEnergy extends EnergyCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/558.png'
+    image_url: 'http://localhost:3000/api/v1/cards/17584/image'
   };
 
   public provides: CardType[] = [CardType.COLORLESS];
@@ -43,16 +43,15 @@ export class LegacyEnergy extends EnergyCard {
 
   public set: string = 'set_h';
 
-  public name: string = 'Legacy Energy';
+  public name: string = '遗赠能量';
 
-  public fullName: string = 'Legacy Energy CSV8C';
+  public fullName: string = '遗赠能量 CSV8C';
 
   public readonly LEGACY_ENERGY_MARKER = 'LEGACY_ENERGY_MARKER';
 
   public text: string =
-    'As long as this card is attached to a Pokemon, it provides every type of Energy but provides only 1 Energy at a time. ' +
-    'If the Pokemon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokemon, ' +
-    'that player takes 1 fewer Prize card. This effect of your Legacy Energy can\'t be applied more than once per game.';
+    '只要这张卡牌，被附着于宝可梦身上，就被视作1个所有属性的能量。' +
+    '身上附着了这张卡牌的宝可梦，受到对手宝可梦的招式的伤害而【昏厥】时，对手拿取的奖赏卡将减少1张。对战中，自己的「遗赠能量」的这个效果，只会生效1次。';
 
   public reduceEffect(_store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.energies.cards.includes(this)) {

@@ -5,34 +5,164 @@ import json
 import re
 import sys
 import urllib.error
+import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
 
-DATA_URL = "https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/ptcg_chs_infos.json"
-IMAGE_BASE_URL = "https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/"
+LOCAL_API_BASE = 'http://localhost:3000'
+LIST_ENDPOINT = '/api/v1/cards'
+DETAIL_ENDPOINT = '/api/v1/cards/{card_id}'
+IMAGE_PREFIX = '/api/v1/cards/'
+PAGE_SIZE = 60
 
 SKILL_ROOT = Path(__file__).resolve().parents[1]
-ASSETS_DIR = SKILL_ROOT / "assets"
-DATA_PATH = ASSETS_DIR / "ptcg_chs_infos.json"
+ASSETS_DIR = SKILL_ROOT / 'assets'
+DATA_PATH = ASSETS_DIR / 'local_cards_index.json'
 
 
 def normalize(text: str) -> str:
-    text = (text or "").strip().lower()
-    return re.sub(r"[\s_\-]+", "", text)
+    text = (text or '').strip().lower()
+    return re.sub(r'[\s_\-]+', '', text)
+
+
+def fetch_json(url: str) -> Dict[str, Any]:
+    request = urllib.request.Request(url, headers={'Accept': 'application/json'})
+    with urllib.request.urlopen(request, timeout=30) as response:
+      body = response.read()
+    return json.loads(body.decode('utf-8'))
+
+
+def build_absolute_image_url(image_url: str) -> str:
+    if not image_url:
+        return ''
+    if image_url.startswith('http://') or image_url.startswith('https://'):
+        return image_url
+    return urllib.parse.urljoin(LOCAL_API_BASE, image_url)
+
+
+def normalize_attack_cost(cost: List[str]) -> List[str]:
+    mapped = {
+        '草': 'GRASS',
+        '火': 'FIRE',
+        '水': 'WATER',
+        '雷': 'LIGHTNING',
+        '超': 'PSYCHIC',
+        '斗': 'FIGHTING',
+        '恶': 'DARK',
+        '钢': 'METAL',
+        '龙': 'DRAGON',
+        '无色': 'COLORLESS',
+    }
+    return [mapped.get(item, item) for item in (cost or [])]
+
+
+def build_raw_data(detail: Dict[str, Any]) -> Dict[str, Any]:
+    raw_card = {
+        'id': detail.get('id'),
+        'name': detail.get('name'),
+        'yorenCode': detail.get('yorenCode'),
+        'cardType': detail.get('cardTypeCode'),
+        'commodityCode': (detail.get('commodityCodes') or [''])[0],
+        'details': {
+            'regulationMarkText': detail.get('regulationMark'),
+            'collectionNumber': detail.get('collectionNumber'),
+            'rarityLabel': detail.get('rarityLabel'),
+            'cardTypeLabel': detail.get('cardTypeLabel'),
+            'attributeLabel': detail.get('attributeLabel'),
+            'trainerTypeLabel': detail.get('trainerTypeLabel'),
+            'energyTypeLabel': detail.get('energyTypeLabel'),
+            'pokemonTypeLabel': detail.get('pokemonTypeLabel'),
+            'specialCardLabel': detail.get('specialCardLabel'),
+            'hp': detail.get('hp'),
+            'evolveText': detail.get('evolveText'),
+            'weakness': detail.get('weakness'),
+            'resistance': detail.get('resistance'),
+            'retreatCost': detail.get('retreatCost'),
+        },
+        'image': detail.get('imageUrl'),
+        'ruleLines': detail.get('ruleLines') or [],
+        'attacks': [
+            {
+                'id': attack.get('id'),
+                'name': attack.get('name'),
+                'text': attack.get('text') or '',
+                'cost': normalize_attack_cost(attack.get('cost') or []),
+                'damage': '' if attack.get('damage') is None else str(attack.get('damage')),
+            }
+            for attack in (detail.get('attacks') or [])
+        ],
+        'features': [
+            {
+                'id': feature.get('id'),
+                'name': feature.get('name'),
+                'text': feature.get('text') or '',
+            }
+            for feature in (detail.get('features') or [])
+        ],
+        'illustratorNames': detail.get('illustratorNames') or [],
+        'pokemonCategory': detail.get('pokemonCategory'),
+        'pokedexCode': detail.get('pokedexCode'),
+        'pokedexText': detail.get('pokedexText'),
+        'height': detail.get('height'),
+        'weight': detail.get('weight'),
+        'deckRuleLimit': detail.get('deckRuleLimit'),
+    }
+
+    collection = {
+        'id': detail.get('collectionId'),
+        'commodityCode': (detail.get('commodityCodes') or [''])[0],
+        'name': detail.get('collectionName'),
+        'commodityNames': detail.get('commodityNames') or [],
+    }
+
+    return {
+        'raw_card': raw_card,
+        'collection': collection,
+        'image_url': build_absolute_image_url(detail.get('imageUrl') or ''),
+        'source': 'local-api',
+        'api_card': detail,
+    }
+
+
+def fetch_card_detail(card_id: int) -> Dict[str, Any]:
+    return fetch_json(urllib.parse.urljoin(LOCAL_API_BASE, DETAIL_ENDPOINT.format(card_id=card_id)))
+
+
+def fetch_page(page: int) -> Dict[str, Any]:
+    query = urllib.parse.urlencode({
+        'page': page,
+        'pageSize': PAGE_SIZE,
+        'sort': 'collectionNumberAsc',
+    })
+    url = urllib.parse.urljoin(LOCAL_API_BASE, LIST_ENDPOINT) + '?' + query
+    return fetch_json(url)
 
 
 def download_data(data_path: Path) -> Dict[str, Any]:
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
 
-    with urllib.request.urlopen(DATA_URL, timeout=30) as response:
-        body = response.read()
+    page = 1
+    items: List[Dict[str, Any]] = []
+    total_pages = 1
 
-    parsed = json.loads(body.decode("utf-8"))
+    while page <= total_pages:
+        payload = fetch_page(page)
+        items.extend(payload.get('items') or [])
+        pagination = payload.get('pagination') or {}
+        total_pages = int(pagination.get('totalPages') or 1)
+        page += 1
 
-    tmp_path = data_path.with_suffix(".json.tmp")
-    tmp_path.write_text(json.dumps(parsed, ensure_ascii=False, indent=2), encoding="utf-8")
+    parsed = {
+        'source': 'local-api',
+        'base_url': LOCAL_API_BASE,
+        'total_items': len(items),
+        'items': items,
+    }
+
+    tmp_path = data_path.with_suffix('.json.tmp')
+    tmp_path.write_text(json.dumps(parsed, ensure_ascii=False, indent=2), encoding='utf-8')
     tmp_path.replace(data_path)
     return parsed
 
@@ -40,62 +170,40 @@ def download_data(data_path: Path) -> Dict[str, Any]:
 def load_data(data_path: Path) -> Dict[str, Any]:
     if not data_path.exists():
         return download_data(data_path)
-    return json.loads(data_path.read_text(encoding="utf-8"))
-
-
-def to_image_url(image_path: str) -> str:
-    normalized = image_path.replace("\\", "/")
-    return IMAGE_BASE_URL + normalized.lstrip("/")
-
-
-def get_detail_value(card: Dict[str, Any], key: str) -> Any:
-    details = card.get("details") or {}
-    if isinstance(details, dict):
-        return details.get(key)
-    return None
-
-
-def to_set_version(regulation_mark: Any) -> str:
-    mark = str(regulation_mark or "").strip().lower()
-    if not mark:
-        return ""
-    return f"set_{mark}"
+    return json.loads(data_path.read_text(encoding='utf-8'))
 
 
 def flatten_cards(data: Dict[str, Any]) -> List[Dict[str, Any]]:
     rows: List[Dict[str, Any]] = []
-    for collection in data.get("collections", []):
-        collection_meta = {k: v for k, v in collection.items() if k != "cards"}
-        cards = collection.get("cards") or []
-        for card in cards:
-            image = card.get("image")
-            if not image:
-                continue
-
-            row = {
-                "id": card.get("id"),
-                "name": card.get("name") or get_detail_value(card, "cardName"),
-                "yoren_code": card.get("yorenCode") or get_detail_value(card, "yorenCode"),
-                "commodity_code": card.get("commodityCode") or get_detail_value(card, "commodityCode"),
-                "card_type": card.get("cardType") or get_detail_value(card, "cardType"),
-                "collection_id": collection.get("id"),
-                "collection_name": collection.get("name"),
-                "collection_number": get_detail_value(card, "collectionNumber"),
-                "rarity": get_detail_value(card, "rarity"),
-                "regulation_mark_text": get_detail_value(card, "regulationMarkText"),
-                "set_version": to_set_version(get_detail_value(card, "regulationMarkText")),
-                "hp": get_detail_value(card, "hp"),
-                "subtypes": get_detail_value(card, "subtypes") or [],
-                "image": image,
-                "image_url": to_image_url(image),
-                "hash": card.get("hash"),
-                "card": {
-                    "raw_card": card,
-                    "collection": collection_meta,
-                },
-            }
-            rows.append(row)
+    for card in data.get('items', []):
+        row = {
+            'id': card.get('id'),
+            'name': card.get('name'),
+            'yoren_code': card.get('yorenCode'),
+            'commodity_code': (card.get('commodityCodes') or [''])[0],
+            'card_type': card.get('cardTypeCode'),
+            'card_type_label': card.get('cardTypeLabel'),
+            'collection_id': card.get('collectionId'),
+            'collection_name': card.get('collectionName'),
+            'collection_number': card.get('collectionNumber'),
+            'rarity': card.get('rarityCode'),
+            'rarity_label': card.get('rarityLabel'),
+            'regulation_mark_text': card.get('regulationMark'),
+            'set_version': to_set_version(card.get('regulationMark')),
+            'hp': card.get('hp'),
+            'evolve_text': card.get('evolveText'),
+            'attribute_label': card.get('attributeLabel'),
+            'pokemon_type_label': card.get('pokemonTypeLabel'),
+            'special_card_label': card.get('specialCardLabel'),
+            'image_url': build_absolute_image_url(card.get('imageUrl') or ''),
+        }
+        rows.append(row)
     return rows
+
+
+def to_set_version(regulation_mark: Any) -> str:
+    mark = str(regulation_mark or '').strip().lower()
+    return f'set_{mark}' if mark else ''
 
 
 def score_row(row: Dict[str, Any], query: str) -> int:
@@ -104,12 +212,12 @@ def score_row(row: Dict[str, Any], query: str) -> int:
         return 0
 
     score = 0
-    name = normalize(str(row.get("name") or ""))
-    collection_name = normalize(str(row.get("collection_name") or ""))
-    yoren_code = normalize(str(row.get("yoren_code") or ""))
-    commodity_code = normalize(str(row.get("commodity_code") or ""))
-    collection_number = normalize(str(row.get("collection_number") or ""))
-    card_id = normalize(str(row.get("id") or ""))
+    name = normalize(str(row.get('name') or ''))
+    collection_name = normalize(str(row.get('collection_name') or ''))
+    yoren_code = normalize(str(row.get('yoren_code') or ''))
+    commodity_code = normalize(str(row.get('commodity_code') or ''))
+    collection_number = normalize(str(row.get('collection_number') or ''))
+    card_id = normalize(str(row.get('id') or ''))
 
     if q == name:
         score = max(score, 100)
@@ -137,27 +245,33 @@ def score_row(row: Dict[str, Any], query: str) -> int:
     if q and q in collection_name:
         score = max(score, 60)
 
-    if q.isascii() and q in name:
-        score = max(score, 110)
-
     return score
 
 
 def search(rows: List[Dict[str, Any]], query: str, limit: int) -> Tuple[int, List[Dict[str, Any]]]:
     scored: List[Tuple[int, Dict[str, Any]]] = []
     for row in rows:
-        s = score_row(row, query)
-        if s > 0:
-            scored.append((s, row))
+        score = score_row(row, query)
+        if score > 0:
+            scored.append((score, row))
 
-    scored.sort(key=lambda item: (item[0], str(item[1].get("id") or "")), reverse=True)
+    scored.sort(
+        key=lambda item: (
+            item[0],
+            str(item[1].get('regulation_mark_text') or ''),
+            str(item[1].get('collection_number') or ''),
+            str(item[1].get('id') or ''),
+        ),
+        reverse=True
+    )
 
     output: List[Dict[str, Any]] = []
-    for idx, (score, row) in enumerate(scored[:limit], start=1):
+    for index, (score, row) in enumerate(scored[:limit], start=1):
         item = dict(row)
-        item["index"] = idx
-        item["score"] = score
+        item['index'] = index
+        item['score'] = score
         output.append(item)
+
     return len(scored), output
 
 
@@ -165,13 +279,15 @@ def run_update(args: argparse.Namespace) -> int:
     try:
         data = download_data(DATA_PATH)
     except urllib.error.URLError as err:
-        print(json.dumps({"ok": False, "error": f"download failed: {err}"}, ensure_ascii=False))
+        print(json.dumps({'ok': False, 'error': f'download failed: {err}'}, ensure_ascii=False))
         return 1
 
     out = {
-        "ok": True,
-        "saved_to": str(DATA_PATH),
-        "collections": len(data.get("collections", [])),
+        'ok': True,
+        'saved_to': str(DATA_PATH),
+        'source': data.get('source'),
+        'base_url': data.get('base_url'),
+        'total_items': data.get('total_items'),
     }
     print(json.dumps(out, ensure_ascii=False, indent=2))
     return 0
@@ -182,7 +298,7 @@ def run_search(args: argparse.Namespace) -> int:
         try:
             data = download_data(DATA_PATH)
         except urllib.error.URLError as err:
-            print(json.dumps({"ok": False, "error": f"refresh failed: {err}"}, ensure_ascii=False))
+            print(json.dumps({'ok': False, 'error': f'refresh failed: {err}'}, ensure_ascii=False))
             return 1
     else:
         data = load_data(DATA_PATH)
@@ -191,42 +307,54 @@ def run_search(args: argparse.Namespace) -> int:
     total_matches, candidates = search(rows, args.query, args.limit)
 
     result: Dict[str, Any] = {
-        "ok": True,
-        "query": args.query,
-        "total_matches": total_matches,
-        "returned_candidates": len(candidates),
-        "needs_selection": total_matches > 1,
-        "candidates": candidates,
+        'ok': True,
+        'query': args.query,
+        'total_matches': total_matches,
+        'returned_candidates': len(candidates),
+        'needs_selection': total_matches > 1,
+        'candidates': candidates,
+        'source': 'local-api',
+        'base_url': LOCAL_API_BASE,
     }
 
     if args.select is not None:
-        selected = next((c for c in candidates if c.get("index") == args.select), None)
+        selected = next((candidate for candidate in candidates if candidate.get('index') == args.select), None)
         if selected is None:
-            result["ok"] = False
-            result["error"] = f"invalid --select index: {args.select}"
+            result['ok'] = False
+            result['error'] = f'invalid --select index: {args.select}'
             print(json.dumps(result, ensure_ascii=False, indent=2))
             return 1
-        result["selected"] = selected
 
+        detail = fetch_card_detail(int(selected['id']))
+        selected = dict(selected)
+        selected['api_card'] = detail
+        selected['card'] = build_raw_data(detail)
+        selected['image_url'] = build_absolute_image_url(detail.get('imageUrl') or '')
+        result['selected'] = selected
     elif len(candidates) == 1:
-        result["selected"] = candidates[0]
+        detail = fetch_card_detail(int(candidates[0]['id']))
+        selected = dict(candidates[0])
+        selected['api_card'] = detail
+        selected['card'] = build_raw_data(detail)
+        selected['image_url'] = build_absolute_image_url(detail.get('imageUrl') or '')
+        result['selected'] = selected
 
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Resolve card objects and GitHub image URLs.")
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    parser = argparse.ArgumentParser(description='Resolve card objects and local image URLs.')
+    subparsers = parser.add_subparsers(dest='command', required=True)
 
-    update_parser = subparsers.add_parser("update", help="Download and update local dataset cache.")
+    update_parser = subparsers.add_parser('update', help='Download and update local API cache.')
     update_parser.set_defaults(func=run_update)
 
-    search_parser = subparsers.add_parser("search", help="Search card candidates from local dataset cache.")
-    search_parser.add_argument("query", help="Card name/code/id keyword.")
-    search_parser.add_argument("--limit", type=int, default=20, help="Max candidates to return.")
-    search_parser.add_argument("--select", type=int, default=None, help="Select index from current candidates.")
-    search_parser.add_argument("--refresh", action="store_true", help="Refresh dataset before searching.")
+    search_parser = subparsers.add_parser('search', help='Search card candidates from local API cache.')
+    search_parser.add_argument('query', help='Card name/code/id keyword.')
+    search_parser.add_argument('--limit', type=int, default=20, help='Max candidates to return.')
+    search_parser.add_argument('--select', type=int, default=None, help='Select index from current candidates.')
+    search_parser.add_argument('--refresh', action='store_true', help='Refresh cache before searching.')
     search_parser.set_defaults(func=run_search)
 
     return parser
@@ -238,5 +366,5 @@ def main() -> int:
     return args.func(args)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     sys.exit(main())

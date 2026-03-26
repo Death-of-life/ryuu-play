@@ -1,0 +1,485 @@
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build --configuration production
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files           | Names         | Raw Size | Estimated Transfer Size
+main.1560c1f17c3515f7.js      | main          |  1.33 MB |               274.92 kB
+styles.057f8e767cea1eb3.css   | styles        | 98.50 kB |                 9.89 kB
+polyfills.bccfe4b9f42ca522.js | polyfills     | 33.10 kB |                10.67 kB
+runtime.44b75bf2fc285cb6.js   | runtime       |  1.20 kB |               651 bytes
+
+| Initial Total |  1.46 MB |               296.11 kB
+
+Build at: 2026-03-23T10:39:11.513Z - Hash: e71e0acdd6ef6e47 - Time: 6149ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build --configuration production
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files           | Names         | Raw Size | Estimated Transfer Size
+main.1560c1f17c3515f7.js      | main          |  1.33 MB |               274.92 kB
+styles.057f8e767cea1eb3.css   | styles        | 98.50 kB |                 9.89 kB
+polyfills.bccfe4b9f42ca522.js | polyfills     | 33.10 kB |                10.67 kB
+runtime.44b75bf2fc285cb6.js   | runtime       |  1.20 kB |               651 bytes
+
+| Initial Total |  1.46 MB |               296.11 kB
+
+Build at: 2026-03-23T12:38:16.440Z - Hash: e71e0acdd6ef6e47 - Time: 4898ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build --configuration production
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files           | Names         | Raw Size | Estimated Transfer Size
+main.1560c1f17c3515f7.js      | main          |  1.33 MB |               274.92 kB
+styles.057f8e767cea1eb3.css   | styles        | 98.50 kB |                 9.89 kB
+polyfills.bccfe4b9f42ca522.js | polyfills     | 33.10 kB |                10.67 kB
+runtime.44b75bf2fc285cb6.js   | runtime       |  1.20 kB |               651 bytes
+
+| Initial Total |  1.46 MB |               296.11 kB
+
+Build at: 2026-03-23T13:29:03.547Z - Hash: e71e0acdd6ef6e47 - Time: 4827ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.80 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.71 MB
+
+Build at: 2026-03-23T13:34:03.134Z - Hash: 82df90ceb2eaceab - Time: 8425ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.80 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.71 MB
+
+Build at: 2026-03-23T13:35:47.270Z - Hash: 8ff59250985d5797 - Time: 4785ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.80 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.71 MB
+
+Build at: 2026-03-23T13:38:05.858Z - Hash: 8ff59250985d5797 - Time: 5101ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.80 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.71 MB
+
+Build at: 2026-03-23T13:40:00.461Z - Hash: 8ff59250985d5797 - Time: 4398ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.80 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.71 MB
+
+Build at: 2026-03-23T13:42:51.777Z - Hash: 8ff59250985d5797 - Time: 4041ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.86 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.77 MB
+
+Build at: 2026-03-25T13:40:13.211Z - Hash: 5eaee24c910bc1b8 - Time: 5130ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.86 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.77 MB
+
+Build at: 2026-03-25T13:44:15.466Z - Hash: d45df588b2fe3358 - Time: 5376ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.86 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.77 MB
+
+Build at: 2026-03-25T13:49:40.818Z - Hash: d45df588b2fe3358 - Time: 6024ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.86 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.77 MB
+
+Build at: 2026-03-25T13:55:22.972Z - Hash: 7f285884a22b3efd - Time: 5999ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.86 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.78 MB
+
+Build at: 2026-03-25T14:01:36.600Z - Hash: aad6940b4e4bb281 - Time: 6125ms
+
+> @ptcg/common@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/sets@0.2.1 compile
+> tsc -p tsconfig.cjs.json && tsc -p tsconfig.esm.json
+
+
+> @ptcg/server@0.2.1 compile
+> tsc && tsc -p tsconfig.esm.json
+
+
+> @ptcg/play@0.2.1 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.
+
+Initial Chunk Files | Names         |  Raw Size
+vendor.js           | vendor        |   6.68 MB |
+main.js             | main          |   1.86 MB |
+styles.css          | styles        | 121.69 kB |
+polyfills.js        | polyfills     | 106.92 kB |
+runtime.js          | runtime       |   6.35 kB |
+
+| Initial Total |   8.78 MB
+
+Build at: 2026-03-25T14:09:31.999Z - Hash: 5a47b564ade2d902 - Time: 6146ms

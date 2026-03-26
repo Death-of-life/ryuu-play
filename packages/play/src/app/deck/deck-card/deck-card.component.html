@@ -8,6 +8,6 @@
     </ptcg-badge>
   </ptcg-card>
   <span class="ptcg-deck-card-label">
-    {{ $any(card.card).rawData?.raw_card?.name || card.card.fullName }}
+    {{ card.card | localizedCardName }}
   </span>
 </div>

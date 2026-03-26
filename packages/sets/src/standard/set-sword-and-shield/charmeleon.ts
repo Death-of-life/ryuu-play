@@ -1,4 +1,4 @@
-import { AttackEffect, CardType, Effect, PokemonCard, Stage, State, StoreLike } from '@ptcg/common';
+import { AttackEffect, CardType, Effect, MoveDeckCardsToDiscardEffect, PokemonCard, Stage, State, StoreLike } from '@ptcg/common';
 
 export class Charmeleon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,8 +37,10 @@ export class Charmeleon extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
-      player.deck.moveTo(player.discard, 3);
-      return state;
+      return store.reduceEffect(
+        state,
+        new MoveDeckCardsToDiscardEffect(player, player, player.deck, player.deck.top(3))
+      );
     }
 
     return state;

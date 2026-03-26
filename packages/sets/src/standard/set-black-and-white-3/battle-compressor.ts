@@ -4,6 +4,7 @@ import {
   Effect,
   GameError,
   GameMessage,
+  MoveDeckCardsToDiscardEffect,
   ShuffleDeckPrompt,
   State,
   StoreLike,
@@ -35,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     }
   );
 
-  player.deck.moveCardsTo(cards, player.discard);
+  state = store.reduceEffect(state, new MoveDeckCardsToDiscardEffect(player, player, player.deck, cards));
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

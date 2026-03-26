@@ -21,7 +21,7 @@ describe('Fezandipiti ex set_h', () => {
     sim = TestUtils.createTestSimulator();
   });
 
-  it('draws 3 cards with Flip the Script only once per turn', () => {
+  it('draws 3 cards with 化危为吉 only once per turn', () => {
     const fezandipitiEx = new FezandipitiEx();
     const topA = new TestCard();
     const topB = new TestCard();
@@ -35,7 +35,7 @@ describe('Fezandipiti ex set_h', () => {
     player.deck.cards = [topA, topB, topC, topD];
     player.marker.addMarker(fezandipitiEx.KNOCKED_OUT_LAST_TURN_MARKER, fezandipitiEx);
 
-    sim.dispatch(new UseAbilityAction(1, 'Flip the Script', {
+    sim.dispatch(new UseAbilityAction(1, '化危为吉', {
       player: PlayerType.BOTTOM_PLAYER,
       slot: SlotType.BENCH,
       index: 0,
@@ -44,7 +44,7 @@ describe('Fezandipiti ex set_h', () => {
     expect(player.hand.cards).toEqual([topA, topB, topC]);
 
     expect(() => {
-      sim.dispatch(new UseAbilityAction(1, 'Flip the Script', {
+      sim.dispatch(new UseAbilityAction(1, '化危为吉', {
         player: PlayerType.BOTTOM_PLAYER,
         slot: SlotType.BENCH,
         index: 0,
@@ -52,7 +52,7 @@ describe('Fezandipiti ex set_h', () => {
     }).toThrow();
   });
 
-  it('places 100 damage on a chosen opposing Pokemon with Cruel Arrow', () => {
+  it('places 100 damage on a chosen opposing Pokemon with 残忍箭矢', () => {
     const fezandipitiEx = new FezandipitiEx();
     const opponentBench = new TestPokemon();
 
@@ -60,7 +60,7 @@ describe('Fezandipiti ex set_h', () => {
     TestUtils.setActive(sim, [fezandipitiEx], [CardType.DARK, CardType.DARK, CardType.DARK]);
     opponent.bench[0].pokemons.cards = [opponentBench];
 
-    sim.dispatch(new AttackAction(1, 'Cruel Arrow'));
+    sim.dispatch(new AttackAction(1, '残忍箭矢'));
 
     const prompt = TestUtils.getLastPrompt(sim) as ChoosePokemonPrompt;
     expect(prompt).toBeTruthy();

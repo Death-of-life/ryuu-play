@@ -15,6 +15,7 @@ $board-min-height: calc(6 * var(--card-size) * #{$card-aspect-ratio} + 2 * #{map
   margin: 0 auto;
   min-height: $board-min-height;
   min-width: $board-min-width;
+  position: relative;
   width: calc(var(--card-size) * #{$ptcg-bench-slots} + #{($ptcg-bench-slots + 1) * map-get($padding, small)});
 }
 
@@ -108,4 +109,31 @@ ptcg-board-deck {
   border-radius: $card-border-radius;
   position: absolute;
   width: var(--card-size);
+}
+
+.ptcg-board-lost-zone {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: map-get($padding, tiny);
+  position: absolute;
+  z-index: 1;
+
+  > ptcg-board-card {
+    width: var(--card-size);
+  }
+}
+
+.ptcg-board-lost-zone-top {
+  left: calc(var(--card-size) * 0.35);
+  top: map-get($padding, normal);
+}
+
+.ptcg-board-lost-zone-bottom {
+  right: calc(var(--card-size) * 0.35);
+  top: calc(50% + #{map-get($padding, normal)});
+}
+
+.ptcg-board-lost-zone-label {
+  white-space: nowrap;
 }

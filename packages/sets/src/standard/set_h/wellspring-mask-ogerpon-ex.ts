@@ -125,10 +125,10 @@ export class WellspringMaskOgerponEx extends PokemonCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/182.png'
+    image_url: 'http://localhost:3000/api/v1/cards/17444/image'
   };
 
-  public tags = [CardTag.POKEMON_EX];
+  public tags = [CardTag.POKEMON_EX, CardTag.TERA];
 
   public stage: Stage = Stage.BASIC;
 
@@ -142,26 +142,25 @@ export class WellspringMaskOgerponEx extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Sob',
-      cost: [CardType.WATER],
+      name: '啜泣',
+      cost: [CardType.COLORLESS],
       damage: '20',
-      text: 'During your opponent\'s next turn, the Defending Pokemon can\'t retreat.',
+      text: '在下一个对手的回合，受到这个招式影响的宝可梦，无法撤退。',
     },
     {
-      name: 'Torrential Pump',
-      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
+      name: '激流水泵',
+      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
       damage: '100',
       text:
-        'You may shuffle 3 Energy from this Pokemon into your deck. If you do, this attack also does 120 damage ' +
-        'to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)',
+        '若希望，可选择这只宝可梦身上附着的3个能量，放回牌库并重洗牌库。在这种情况下，给对手的1只备战宝可梦，也造成120伤害。[备战宝可梦不计算弱点、抗性。]',
     },
   ];
 
   public set: string = 'set_h';
 
-  public name: string = 'Wellspring Mask Ogerpon ex';
+  public name: string = '厄诡椪 水井面具ex';
 
-  public fullName: string = 'Wellspring Mask Ogerpon ex CSV8C';
+  public fullName: string = '厄诡椪 水井面具ex CSV8C';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     const cantRetreat = commonAttacks.cantRetreat(this, store, state, effect);

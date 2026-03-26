@@ -96,7 +96,7 @@ export class Arven extends TrainerCard {
       name: '补充包 亘古开来',
       salesDate: '2025-01-17'
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/244/338.png'
+    image_url: 'http://localhost:3000/api/v1/cards/11950/image'
   };
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;

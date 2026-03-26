@@ -128,7 +128,7 @@ export class PromptPutDamageComponent implements OnChanges {
     if (initial !== undefined && pokemonSlot.damage <= initial.damage) {
       isRemoveDisabled = true;
     }
-    if (this.damage === 0 || pokemonSlot.damage >= allowedDamage) {
+    if (allowedDamage === undefined || this.damage === 0 || pokemonSlot.damage >= allowedDamage) {
       isAddDisabled = true;
     }
 
@@ -151,7 +151,7 @@ export class PromptPutDamageComponent implements OnChanges {
 
         if (initial !== undefined) {
           const damage = item.pokemonSlot.damage - initial.damage;
-          if (damage >= 0) {
+          if (damage > 0) {
             results.push({ target: item.target, damage });
           }
         }

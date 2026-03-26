@@ -36,7 +36,7 @@ export class Duskull extends PokemonCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/561.png',
+    image_url: 'http://localhost:3000/api/v1/cards/17587/image',
   };
 
   public stage: Stage = Stage.BASIC;
@@ -53,16 +53,16 @@ export class Duskull extends PokemonCard {
 
   public powers = [
     {
-      name: 'Soul Transfer',
+      name: '渡魂',
       useWhenInPlay: true,
       powerType: PowerType.ABILITY,
-      text: 'Once during your turn, you may put up to 3 Duskull from your discard pile onto your Bench.',
+      text: '在自己的回合可以使用1次。选择自己弃牌区中最多3张「夜巡灵」，放于备战区。',
     },
   ];
 
   public attacks = [
     {
-      name: 'Mumble',
+      name: '喃喃自语',
       cost: [CardType.PSYCHIC, CardType.PSYCHIC],
       damage: '30',
       text: '',
@@ -71,9 +71,9 @@ export class Duskull extends PokemonCard {
 
   public set: string = 'set_h';
 
-  public name: string = 'Duskull';
+  public name: string = '夜巡灵';
 
-  public fullName: string = 'Duskull CSV8C';
+  public fullName: string = '夜巡灵 CSV8C';
 
   public readonly SOUL_TRANSFER_MARKER = 'SOUL_TRANSFER_MARKER';
 
@@ -86,7 +86,7 @@ export class Duskull extends PokemonCard {
       }
 
       const slots: PokemonSlot[] = player.bench.filter(b => b.pokemons.cards.length === 0);
-      const duskullInDiscard = player.discard.cards.filter(c => c instanceof PokemonCard && c.name === 'Duskull');
+      const duskullInDiscard = player.discard.cards.filter(c => c instanceof PokemonCard && c.name === '夜巡灵');
 
       if (slots.length === 0 || duskullInDiscard.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -100,7 +100,7 @@ export class Duskull extends PokemonCard {
           player.id,
           GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
           player.discard,
-          { superType: SuperType.POKEMON, name: 'Duskull' },
+          { superType: SuperType.POKEMON, name: '夜巡灵' },
           { min: 1, max, allowCancel: false }
         ),
         selected => {

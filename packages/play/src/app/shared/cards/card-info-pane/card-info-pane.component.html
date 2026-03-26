@@ -7,15 +7,15 @@
   <div class="ptcg-card-info-text" *ngIf="!facedown">
 
     <div class="title" *ngIf="card.superType === SuperType.POKEMON">
-      <ptcg-card-text [value]="card.name"></ptcg-card-text>
+      <ptcg-card-text [value]="displayText.getCardDisplayName(card)"></ptcg-card-text>
       <div class="ptcg-u-spacer"></div>
       <div class="subtitle-evolves-from" *ngIf="card.evolvesFrom">
-        {{ 'CARDS_EVOLVES_FROM' | translate: { name: card.evolvesFrom } }}
+        {{ 'CARDS_EVOLVES_FROM' | translate: { name: displayText.getCardDisplayName(card.evolvesFrom) } }}
       </div>
     </div>
 
     <div class="title" *ngIf="card.superType === SuperType.ENERGY || card.superType === SuperType.TRAINER">
-      <ptcg-card-text [value]="card.name"></ptcg-card-text>
+      <ptcg-card-text [value]="displayText.getCardDisplayName(card)"></ptcg-card-text>
     </div>
 
     <div class="subtitle" *ngIf="card.superType === SuperType.POKEMON">
@@ -70,7 +70,7 @@
         </div>
       </div>
       <div class="card-text">
-        <ptcg-card-text [value]="card.text"></ptcg-card-text>
+        <ptcg-card-text [value]="displayText.getLocalizedCardText(card)"></ptcg-card-text>
       </div>
     </div>
 
@@ -84,12 +84,12 @@
           </div>
         </div>
         <div class="card-text">
-          <ptcg-card-text [value]="card.text"></ptcg-card-text>
+          <ptcg-card-text [value]="displayText.getLocalizedCardText(card)"></ptcg-card-text>
         </div>
       </div>
     </ptcg-hover-highlight>
 
-    <ptcg-hover-highlight *ngFor="let power of card.powers"
+    <ptcg-hover-highlight *ngFor="let power of card.powers; let i = index"
       (click)="enabledAbilities[power.name] && clickAction({ability: power.name})"
       [enabled]="enabledAbilities[power.name]">
       <div class="power">
@@ -101,16 +101,16 @@
             <div class="ability" *ngSwitchCase="PowerType.ANCIENT_TRAIT" translate>CARDS_ANCIENT_TRAIT</div>
           </div>
           <div class="power-name">
-            {{ power.name }}
+            {{ displayText.getLocalizedPowerName(card, power, i) }}
           </div>
         </div>
         <div class="card-text">
-          <ptcg-card-text [value]=power.text></ptcg-card-text>
+          <ptcg-card-text [value]="displayText.getLocalizedPowerText(card, power, i)"></ptcg-card-text>
         </div>
       </div>
     </ptcg-hover-highlight>
 
-    <ptcg-hover-highlight *ngFor="let attack of card.attacks"
+    <ptcg-hover-highlight *ngFor="let attack of card.attacks; let i = index"
       (click)="options.enableAttack && clickAction({attack: attack.name})"
       [enabled]="options.enableAttack">
       <div class="attack">
@@ -120,7 +120,7 @@
             <ptcg-energy *ngFor="let cost of attack.cost" [type]="cost"></ptcg-energy>
           </div>
           <div class="attack-name">
-            {{ attack.name }}
+            {{ displayText.getLocalizedAttackName(card, attack, i) }}
           </div>
           <div class="ptcg-u-spacer"></div>
           <div class="attack-damage" *ngIf="attack.damage !== ''">
@@ -128,7 +128,7 @@
           </div>
         </div>
         <div class="card-text" *ngIf="attack.text">
-          <ptcg-card-text [value]="attack.text"></ptcg-card-text>
+          <ptcg-card-text [value]="displayText.getLocalizedAttackText(card, attack, i)"></ptcg-card-text>
         </div>
       </div>
     </ptcg-hover-highlight>

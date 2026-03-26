@@ -20,7 +20,7 @@ describe('Dusknoir set_h', () => {
     sim = TestUtils.createTestSimulator();
   });
 
-  it('uses Cursed Blast to place 13 damage counters and Knock Out itself', () => {
+  it('uses 咒怨炸弹 to place 13 damage counters and Knock Out itself', () => {
     const dusknoir = new Dusknoir();
     const target = new DragapultEx();
 
@@ -29,7 +29,7 @@ describe('Dusknoir set_h', () => {
     player.bench[0].pokemons.cards = [dusknoir];
     opponent.bench[0].pokemons.cards = [target];
 
-    sim.dispatch(new UseAbilityAction(1, 'Cursed Blast', {
+    sim.dispatch(new UseAbilityAction(1, '咒怨炸弹', {
       player: PlayerType.BOTTOM_PLAYER,
       slot: SlotType.BENCH,
       index: 0,

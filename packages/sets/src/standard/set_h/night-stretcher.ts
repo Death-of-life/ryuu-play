@@ -98,7 +98,7 @@ export class NightStretcher extends TrainerCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/492.png',
+    image_url: 'http://localhost:3000/api/v1/cards/17560/image',
   };
 
   public trainerType: TrainerType = TrainerType.ITEM;

@@ -25,7 +25,7 @@ export class Dreepy extends PokemonCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/458/430.png',
+    image_url: 'http://localhost:3000/api/v1/cards/17534/image',
   };
 
   public stage: Stage = Stage.BASIC;
@@ -42,13 +42,13 @@ export class Dreepy extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Little Grudge',
+      name: '小哀怨',
       cost: [CardType.PSYCHIC],
       damage: '10',
       text: '',
     },
     {
-      name: 'Bite',
+      name: '咬住',
       cost: [CardType.FIRE, CardType.PSYCHIC],
       damage: '40',
       text: '',
@@ -57,7 +57,7 @@ export class Dreepy extends PokemonCard {
 
   public set: string = 'set_h';
 
-  public name: string = 'Dreepy';
+  public name: string = '多龙梅西亚';
 
-  public fullName: string = 'Dreepy CSV8C';
+  public fullName: string = '多龙梅西亚 CSV8C';
 }

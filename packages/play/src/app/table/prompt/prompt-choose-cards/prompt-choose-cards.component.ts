@@ -20,6 +20,10 @@ export class PromptChooseCardsComponent {
     this.message = prompt.message;
     this.promptId = prompt.id;
     this.isSecret = prompt.options.isSecret;
+    this.isSubmitting = false;
+    this.result = [];
+    this.isInvalid = false;
+    this.cardbackMap = {};
 
     if (prompt.options.isSecret) {
       prompt.cards.cards.forEach((c, i) => {
@@ -39,6 +43,7 @@ export class PromptChooseCardsComponent {
   public isInvalid = false;
   public isSecret: boolean;
   public revealed = false;
+  public isSubmitting = false;
   public cardbackMap: {[index: number]: boolean} = {};
   private promptValue: ChooseCardsPrompt;
   private result: number[] = [];
@@ -52,12 +57,20 @@ export class PromptChooseCardsComponent {
   }
 
   public cancel() {
+    if (this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
     const gameId = this.gameState.gameId;
     const id = this.promptId;
     this.gameService.resolvePrompt(gameId, id, null);
   }
 
   public confirm() {
+    if (this.isSubmitting) {
+      return;
+    }
+    this.isSubmitting = true;
     const gameId = this.gameState.gameId;
     const id = this.promptId;
     this.gameService.resolvePrompt(gameId, id, this.result);

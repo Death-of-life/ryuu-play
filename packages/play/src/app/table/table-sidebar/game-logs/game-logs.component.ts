@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { StateLog, StateLogParam } from '@ptcg/common';
 
 import { GameService } from '../../../api/services/game.service';
+import { DisplayTextService } from '../../../shared/i18n/display-text.service';
 import { LocalGameState } from '../../../shared/session/session.interface';
 import { SessionService } from '../../../shared/session/session.service';
 
@@ -46,7 +47,8 @@ export class GameLogsComponent {
     private elementRef: ElementRef<HTMLElement>,
     private gameService: GameService,
     private sessionService: SessionService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private displayText: DisplayTextService
   ) { }
 
   public clearLogs() {
@@ -119,6 +121,8 @@ export class GameLogsComponent {
       log.params.message = this.translate.instant('GAME_MESSAGES.' + log.params.message);
     }
 
+    log.params = this.displayText.localizeGameLogParams(log.params);
+
     if (user !== undefined) {
       name = user.name;
       className = playerIndex >= 0
@@ -134,7 +138,7 @@ export class GameLogsComponent {
     } else if (log.client === 0) {
       return {
         id: log.id,
-        name: 'System',
+        name: this.displayText.getSystemName(),
         className: 'ptcg-system',
         message: log.message,
         params: log.params

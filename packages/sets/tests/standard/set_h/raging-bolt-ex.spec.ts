@@ -19,7 +19,7 @@ describe('Raging Bolt ex set_h', () => {
     sim = TestUtils.createTestSimulator();
   });
 
-  it('discards hand and draws 6 cards with Burst Roar', () => {
+  it('discards hand and draws 6 cards with 飞溅咆哮', () => {
     const ragingBoltEx = new RagingBoltEx();
     const handA = new TestCard();
     const handB = new TestCard();
@@ -37,7 +37,7 @@ describe('Raging Bolt ex set_h', () => {
     player.hand.cards = [handA, handB, handC];
     player.deck.cards = [deckA, deckB, deckC, deckD, deckE, deckF, deckG];
 
-    sim.dispatch(new AttackAction(1, 'Burst Roar'));
+    sim.dispatch(new AttackAction(1, '飞溅咆哮'));
 
     expect(player.discard.cards).toContain(handA);
     expect(player.discard.cards).toContain(handB);
@@ -45,20 +45,20 @@ describe('Raging Bolt ex set_h', () => {
     expect(player.hand.cards).toEqual([deckA, deckB, deckC, deckD, deckE, deckF]);
   });
 
-  it('discards selected Basic Energy from your Pokemon for Bellowing Thunder', () => {
+  it('discards selected Basic Energy from your Pokemon for 极雷轰', () => {
     const ragingBoltEx = new RagingBoltEx();
     const activeLightning = new TestEnergy(CardType.LIGHTNING);
-    const activeWater = new TestEnergy(CardType.WATER);
+    const activeFighting = new TestEnergy(CardType.FIGHTING);
     const benchGrass = new TestEnergy(CardType.GRASS);
     const benchPokemon = new TestPokemon();
 
     const { player, opponent } = TestUtils.getAll(sim);
-    TestUtils.setActive(sim, [ragingBoltEx], [CardType.LIGHTNING, CardType.COLORLESS]);
-    player.active.energies.cards = [activeLightning, activeWater];
+    TestUtils.setActive(sim, [ragingBoltEx], [CardType.LIGHTNING, CardType.FIGHTING]);
+    player.active.energies.cards = [activeLightning, activeFighting];
     player.bench[0].pokemons.cards = [benchPokemon];
     player.bench[0].energies.cards = [benchGrass];
 
-    sim.dispatch(new AttackAction(1, 'Bellowing Thunder'));
+    sim.dispatch(new AttackAction(1, '极雷轰'));
 
     const prompt = TestUtils.getLastPrompt(sim) as ChooseCardsPrompt;
     expect(prompt).toBeTruthy();
@@ -71,7 +71,7 @@ describe('Raging Bolt ex set_h', () => {
 
     expect(player.discard.cards).toContain(activeLightning);
     expect(player.discard.cards).toContain(benchGrass);
-    expect(player.active.energies.cards).toEqual([activeWater]);
+    expect(player.active.energies.cards).toEqual([activeFighting]);
     expect(player.bench[0].energies.cards).toEqual([]);
     expect(opponent.active.damage).toEqual(140);
   });

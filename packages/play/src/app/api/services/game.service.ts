@@ -33,13 +33,14 @@ export class GameService {
     return this.api.get<PlayerStatsResponse>('/v1/game/' + gameId + '/playerStats');
   }
 
-  public join(gameId: number): Observable<GameState> {
-    return new Observable<GameState>(observer => {
+  public join(gameId: number): Observable<LocalGameState | undefined> {
+    return new Observable<LocalGameState | undefined>(observer => {
       this.socketService.emit('game:join', gameId)
         .pipe(finalize(() => observer.complete()))
         .subscribe((gameState: GameState) => {
-          this.appendGameState(gameState);
-          observer.next(gameState);
+          const localGameState = this.appendGameState(gameState)
+            ?? this.sessionService.session.gameStates.find(g => g.gameId === gameId && g.deleted === false);
+          observer.next(localGameState);
         }, (error: any) => {
           observer.error(error);
         });

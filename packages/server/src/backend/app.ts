@@ -11,6 +11,7 @@ import { cors } from './services/cors';
 
 import {
   Avatars,
+  CardProgress,
   ControllerClass,
   Cards,
   Decks,
@@ -20,7 +21,8 @@ import {
   Profile,
   Ranking,
   Replays,
-  ResetPassword
+  ResetPassword,
+  Testing
 } from './controllers';
 
 export class App {
@@ -49,6 +51,7 @@ export class App {
     app.use(json({limit: 512 + config.backend.avatarFileSize * 4}));
     app.use(cors());
     define('/v1/avatars', Avatars);
+    define('/v1/card-progress', CardProgress);
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);
     define('/v1/game', Game);
@@ -58,6 +61,7 @@ export class App {
     define('/v1/ranking', Ranking);
     define('/v1/replays', Replays);
     define('/v1/resetPassword', ResetPassword);
+    define('/v1/testing', Testing);
 
     app.use('/scans', express.static(config.sets.scansDir));
     app.use('/avatars', express.static(config.backend.avatarsDir));

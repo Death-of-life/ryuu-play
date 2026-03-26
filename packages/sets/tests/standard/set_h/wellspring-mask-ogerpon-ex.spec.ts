@@ -18,7 +18,7 @@ describe('Wellspring Mask Ogerpon ex set_h', () => {
     sim = TestUtils.createTestSimulator();
   });
 
-  it('can shuffle 3 attached Energy cards into deck with Torrential Pump', () => {
+  it('can shuffle 3 attached Energy cards into deck with 激流水泵', () => {
     const wellspringMaskOgerponEx = new WellspringMaskOgerponEx();
     const energyA = new TestEnergy(CardType.WATER);
     const energyB = new TestEnergy(CardType.WATER);
@@ -28,7 +28,7 @@ describe('Wellspring Mask Ogerpon ex set_h', () => {
     TestUtils.setActive(sim, [wellspringMaskOgerponEx]);
     player.active.energies.cards = [energyA, energyB, energyC];
 
-    sim.dispatch(new AttackAction(1, 'Torrential Pump'));
+    sim.dispatch(new AttackAction(1, '激流水泵'));
 
     const confirmPrompt = TestUtils.getLastPrompt(sim) as ConfirmPrompt;
     expect(confirmPrompt).toBeTruthy();

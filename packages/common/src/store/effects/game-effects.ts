@@ -5,6 +5,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { Card } from '../card/card';
 import { PokemonSlot } from '../state/pokemon-slot';
 import { TrainerCard } from '../card/trainer-card';
+import { CardList } from '../state/card-list';
 
 export enum GameEffects {
   RETREAT_EFFECT = 'RETREAT_EFFECT',
@@ -16,7 +17,8 @@ export enum GameEffects {
   ATTACK_EFFECT = 'ATTACK_EFFECT',
   KNOCK_OUT_EFFECT = 'KNOCK_OUT_EFFECT',
   HEAL_EFFECT = 'HEAL_EFFECT',
-  EVOLVE_EFFECT = 'EVOLVE_EFFECT'
+  EVOLVE_EFFECT = 'EVOLVE_EFFECT',
+  MOVE_DECK_CARDS_TO_DISCARD_EFFECT = 'MOVE_DECK_CARDS_TO_DISCARD_EFFECT'
 }
 
 export class RetreatEffect implements Effect {
@@ -156,5 +158,21 @@ export class EvolveEffect implements Effect {
     this.player = player;
     this.target = target;
     this.pokemonCard = pokemonCard;
+  }
+}
+
+export class MoveDeckCardsToDiscardEffect implements Effect {
+  readonly type: string = GameEffects.MOVE_DECK_CARDS_TO_DISCARD_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public targetPlayer: Player;
+  public source: CardList;
+  public cards: Card[];
+
+  constructor(player: Player, targetPlayer: Player, source: CardList, cards: Card[]) {
+    this.player = player;
+    this.targetPlayer = targetPlayer;
+    this.source = source;
+    this.cards = cards.slice();
   }
 }

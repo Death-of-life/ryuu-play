@@ -101,9 +101,12 @@ export class MainService {
       .pipe(finalize(() => { this.loading = false; }));
   }
 
-  public createGame(deck: string[], gameSettings: GameSettings, clientId?: number) {
+  public createGame(deck: string[], gameSettings: GameSettings, clientId?: number): Observable<GameInfo> {
     this.loading = true;
-    return this.socketService.emit('core:createGame', { deck, gameSettings, clientId })
+    return this.socketService.emit<{ deck: string[], gameSettings: GameSettings, clientId?: number }, GameInfo>(
+      'core:createGame',
+      { deck, gameSettings, clientId }
+    )
       .pipe(finalize(() => { this.loading = false; }));
   }
 

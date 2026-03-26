@@ -89,19 +89,19 @@ export class BuddyBuddyPoffin extends TrainerCard {
       commodityCode: 'CSV7C',
       salesDate: '2026-01-16',
     },
-    image_url: 'https://raw.githubusercontent.com/duanxr/PTCG-CHS-Datasets/main/img/324/484.png',
+    image_url: 'http://localhost:3000/api/v1/cards/16752/image',
   };
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
   public set: string = 'set_h';
 
-  public name: string = 'Buddy-Buddy Poffin';
+  public name: string = '友好宝芬';
 
-  public fullName: string = 'Buddy-Buddy Poffin CSV7C';
+  public fullName: string = '友好宝芬 CSV7C';
 
   public text: string =
-    'Search your deck for up to 2 Basic Pokemon with 70 HP or less and put them onto your Bench. Then, shuffle your deck.';
+    '选择自己牌库中，最多2张HP在「70」及以下的【基础】宝可梦，放于备战区。并重洗牌库。';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

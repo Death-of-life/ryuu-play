@@ -59,6 +59,10 @@ export class PutDamagePrompt extends Prompt<DamageMap[]> {
     const blocked = this.options.blocked.map(b => StateUtils.getTarget(state, player, b));
 
     for (const r of result) {
+      if (r.damage < 0) {
+        return false;
+      }
+
       const target = StateUtils.getTarget(state, player, r.target);
       if (target === undefined || blocked.includes(target)) {
         return false;

@@ -5,9 +5,11 @@ import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { VIRTUAL_SCROLL_STRATEGY } from '@angular/cdk/scrolling';
 import { map } from 'rxjs/operators';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 import { AlertService } from '../../shared/alert/alert.service';
 import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';
+import { CardVariantPickerPopupComponent } from '../../shared/cards/card-variant-picker-popup/card-variant-picker-popup.component';
 import { DeckEditPane } from './deck-edit-pane.interface';
 import { DeckEditToolbarFilter } from '../deck-edit-toolbar/deck-edit-toolbar-filter.interface';
 import { DeckItem, LibraryItem } from '../deck-card/deck-card.interface';
@@ -50,6 +52,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: AlertService,
     private cardsBaseService: CardsBaseService,
+    private dialog: MatDialog,
     private ngZone: NgZone,
     private dnd: DndService,
     private translate: TranslateService
@@ -83,9 +86,11 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
   }
 
   private loadLibraryCards(): LibraryItem[] {
-    return this.cardsBaseService.getCards().map(card => {
+    return this.cardsBaseService.getDisplayCards().map(card => {
+      const variantCards = this.cardsBaseService.getVariantCards(card);
       const item: LibraryItem = {
         card,
+        variantCards,
         pane: DeckEditPane.LIBRARY,
         count: 1,
         scanUrl: this.cardsBaseService.getScanUrl(card),
@@ -219,7 +224,35 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy {
     this.deckItemsChange.next(list);
   }
 
-  public showCardInfo(item: LibraryItem) {
+  public showLibraryCardInfo(item: LibraryItem) {
+    if (!item.variantCards || item.variantCards.length <= 1) {
+      this.addCardToDeck(item);
+      return;
+    }
+
+    const dialog = this.dialog.open(CardVariantPickerPopupComponent, {
+      maxWidth: '100%',
+      width: '1180px',
+      data: {
+        cards: item.variantCards,
+        selected: item.card
+      }
+    });
+
+    dialog.afterClosed().subscribe((selected: typeof item.card | undefined) => {
+      if (!selected) {
+        return;
+      }
+
+      this.addCardToDeck({
+        ...item,
+        card: selected,
+        scanUrl: this.cardsBaseService.getScanUrl(selected)
+      });
+    });
+  }
+
+  public showDeckCardInfo(item: DeckItem) {
     this.cardsBaseService.showCardInfo({ card: item.card });
   }
 
