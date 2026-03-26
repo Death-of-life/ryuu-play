@@ -48,7 +48,7 @@ function* usePainfulSpoons(
     state,
     new ChoosePokemonPrompt(
       player.id,
-      GameMessage.MOVE_DAMAGE,
+      GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
       PlayerType.TOP_PLAYER,
       [SlotType.ACTIVE, SlotType.BENCH],
       { min: 1, max: 1, allowCancel: true }
@@ -73,7 +73,7 @@ function* usePainfulSpoons(
     state,
     new ChoosePokemonPrompt(
       player.id,
-      GameMessage.MOVE_DAMAGE,
+      GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
       PlayerType.TOP_PLAYER,
       [SlotType.ACTIVE, SlotType.BENCH],
       { min: 1, max: 1, allowCancel: true, blocked: blockedTarget }
@@ -98,16 +98,23 @@ function* usePainfulSpoons(
     throw new GameError(GameMessage.CANNOT_USE_POWER);
   }
 
-  let countersToMove = 1;
-  if (maxCounters > 1) {
-    yield store.prompt(
-      state,
-      new SelectPrompt(player.id, GameMessage.CHOOSE_OPTION, ['1', '2'], { allowCancel: false }),
-      result => {
-        countersToMove = (result ?? 0) + 1;
-        next();
-      }
-    );
+  let countersToMove = 0;
+  yield store.prompt(
+    state,
+    new SelectPrompt(
+      player.id,
+      GameMessage.CHOOSE_OPTION,
+      Array.from({ length: maxCounters + 1 }, (_, index) => String(index)),
+      { allowCancel: false }
+    ),
+    result => {
+      countersToMove = result ?? 0;
+      next();
+    }
+  );
+
+  if (countersToMove === 0) {
+    return state;
   }
 
   source.damage -= countersToMove * 10;
@@ -163,7 +170,7 @@ export class RadiantAlakazam extends PokemonCard {
       commodityCode: 'CS6bC',
       name: '补充包 碧海暗影 逐',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/10331/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/10331/image',
   };
 
   public tags = [CardTag.RADIANT];

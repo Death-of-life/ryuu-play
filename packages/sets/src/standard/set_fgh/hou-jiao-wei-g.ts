@@ -179,7 +179,7 @@ function createHouJiaoWeiGRawData(seed: HouJiaoWeiGVariantSeed): HouJiaoWeiGRawD
       commodityCode: seed.commodityCode,
       name: seed.collectionName,
     },
-    image_url: `http://localhost:3000/api/v1/cards/${seed.id}/image`,
+    image_url: `http://212.52.0.192:3000/api/v1/cards/${seed.id}/image`,
     logic_group_key: HOU_JIAO_WEI_G_LOGIC_GROUP_KEY,
     variant_group_key: HOU_JIAO_WEI_G_LOGIC_GROUP_KEY,
     variant_group_size: HOU_JIAO_WEI_G_VARIANTS.length,

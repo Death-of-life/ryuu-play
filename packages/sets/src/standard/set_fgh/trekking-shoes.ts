@@ -5,6 +5,7 @@ import {
   GameError,
   GameMessage,
   SelectPrompt,
+  ShowCardsPrompt,
   State,
   StoreLike,
   TrainerEffect,
@@ -22,6 +23,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const topCard = player.deck.cards.shift() as Card;
   const revealed = new CardList();
   revealed.cards = [topCard];
+
+  yield store.prompt(
+    state,
+    new ShowCardsPrompt(player.id, GameMessage.CARDS_SHOWED_BY_THE_OPPONENT, [topCard]),
+    () => next()
+  );
 
   let choice = 0;
   yield store.prompt(

@@ -64,7 +64,7 @@ function createDaWeiLiSafeDamRawData(seed: DaWeiLiSafeDamFaceSeed) {
       commodityCode: 'CS5bC',
       name: '补充包 勇魅群星 勇',
     },
-    image_url: `http://localhost:3000/api/v1/cards/${seed.id}/image`,
+    image_url: `http://212.52.0.192:3000/api/v1/cards/${seed.id}/image`,
     logic_group_key: SAFE_DAM_LOGIC_GROUP_KEY,
     variant_group_key: SAFE_DAM_VARIANT_GROUP_KEY,
     variant_group_size: SAFE_DAM_VARIANT_GROUP_SIZE,

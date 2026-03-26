@@ -96,7 +96,7 @@ export function seedHuoKongLongVariant<T extends HuoKongLongVariantCapable>(
       commodityCode: seed.commodityCode,
       name: seed.collectionName,
     },
-    image_url: `http://localhost:3000/api/v1/cards/${seed.id}/image`,
+    image_url: `http://212.52.0.192:3000/api/v1/cards/${seed.id}/image`,
     logic_group_key: keys.logicGroupKey,
     variant_group_key: keys.variantGroupKey,
     variant_group_size: keys.variantGroupSize,

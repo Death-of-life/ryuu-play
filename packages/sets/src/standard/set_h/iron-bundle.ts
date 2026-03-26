@@ -1,115 +1,164 @@
 import {
+  AddMarkerEffect,
   AttackEffect,
   CardType,
+  ChoosePokemonPrompt,
   Effect,
+  EndTurnEffect,
+  GameError,
+  GameMessage,
   PlayerType,
+  PowerEffect,
+  PowerType,
   PokemonCard,
+  SlotType,
   Stage,
   State,
+  StateUtils,
   StoreLike,
+  UseAttackEffect,
 } from '@ptcg/common';
+
+const COOLING_JET_MARKER = 'COOLING_JET_MARKER';
 
 export class IronBundle extends PokemonCard {
   public rawData = {
     raw_card: {
-      id: 16714,
+      id: 17369,
       name: '铁包袱',
-      yorenCode: 'P0989',
+      yorenCode: 'P0991',
       cardType: '1',
-      commodityCode: 'CSV7C',
+      commodityCode: 'PROMOGIFT02',
       details: {
-        regulationMarkText: 'H',
-        collectionNumber: '132/204',
-        rarityLabel: 'C★★★',
+        regulationMarkText: 'G',
+        collectionNumber: '232/SV-P',
+        rarityLabel: '无标记',
         cardTypeLabel: '宝可梦',
-        attributeLabel: '斗',
-        specialCardLabel: '古代',
-        hp: 120,
+        attributeLabel: '水',
+        specialCardLabel: '未来',
+        hp: 100,
         evolveText: '基础',
-        weakness: '草 ×2',
+        weakness: '雷 ×2',
         resistance: null,
-        retreatCost: 2,
+        retreatCost: 1,
       },
-      image: '/api/v1/cards/16714/image',
+      image: '/api/v1/cards/17369/image',
       ruleLines: [],
       attacks: [
         {
-          id: 2203,
-          name: '磁场炸裂',
-          text: '如果自己场上有3个及以上能量的话，则追加造成70伤害。这个招式的伤害不计算弱点。',
-          cost: ['斗'],
-          damage: '20+',
-        },
-        {
-          id: 2204,
-          name: '力量宝石',
-          text: '',
-          cost: ['斗', '无色'],
-          damage: '60',
+          id: 1,
+          name: '冷却喷射',
+          text: '在下一个对手的回合，受到这个招式影响的进化宝可梦，无法使用招式。',
+          cost: ['水', '无色', '无色'],
+          damage: '80',
         },
       ],
-      features: [],
-      illustratorNames: ['DOM'],
-      pokemonCategory: '悖谬宝可梦',
-      pokedexCode: '0989',
-      pokedexText: '没有捕获记录。资料不足。其特征与某本探险记中所记载的生物一致。',
-      height: 2.3,
-      weight: 60,
+      features: [
+        {
+          id: 1,
+          name: '强力吹风机',
+          text: '如果这只宝可梦在备战区的话，则在自己的回合可以使用1次。将对手的战斗宝可梦与备战宝可梦互换（放于战斗场的宝可梦由对手选择）。然后，将这只宝可梦，以及放于其身上的所有卡牌，放于弃牌区。',
+        },
+      ],
+      illustratorNames: ['Oswaldo KATO'],
       deckRuleLimit: null,
     },
     collection: {
-      id: 324,
-      commodityCode: 'CSV7C',
-      name: '补充包 利刃猛醒',
+      id: 454,
+      commodityCode: 'PROMOGIFT02',
+      name: '活动奖赏包 第二弹',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/16714/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/17369/image',
   };
 
   public stage: Stage = Stage.BASIC;
 
-  public cardTypes: CardType[] = [CardType.FIGHTING];
+  public cardTypes: CardType[] = [CardType.WATER];
 
-  public hp: number = 120;
+  public hp = 100;
 
-  public weakness = [{ type: CardType.GRASS }];
+  public weakness = [{ type: CardType.LIGHTNING }];
 
   public resistance = [];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS];
 
-  public attacks = [
+  public powers = [
     {
-      name: '磁场炸裂',
-      cost: [CardType.FIGHTING],
-      damage: '20+',
-      text: '如果自己场上有3个及以上能量的话，则追加造成70伤害。这个招式的伤害不计算弱点。',
-    },
-    {
-      name: '力量宝石',
-      cost: [CardType.FIGHTING, CardType.COLORLESS],
-      damage: '60',
-      text: '',
+      name: '强力吹风机',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: '如果这只宝可梦在备战区的话，则在自己的回合可以使用1次。将对手的战斗宝可梦与备战宝可梦互换（放于战斗场的宝可梦由对手选择）。然后，将这只宝可梦，以及放于其身上的所有卡牌，放于弃牌区。',
     },
   ];
 
-  public set: string = 'set_h';
+  public attacks = [
+    {
+      name: '冷却喷射',
+      cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
+      damage: '80',
+      text: '在下一个对手的回合，受到这个招式影响的进化宝可梦，无法使用招式。',
+    },
+  ];
 
-  public name: string = '铁包袱';
+  public set = 'set_h';
 
-  public fullName: string = '铁包袱 CSV7C';
+  public name = '铁包袱';
+
+  public fullName = '铁包袱 PROMOGIFT02';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      let energyCount = 0;
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (pokemonSlot) => {
-        energyCount += pokemonSlot.energies.cards.length;
-      });
+    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      if (energyCount >= 3) {
-        effect.damage += 70;
+      if (!player.bench.some(slot => slot.getPokemonCard() === this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      effect.ignoreWeakness = true;
+      const hasBench = opponent.bench.some(b => b.pokemons.cards.length > 0);
+      if (!hasBench) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
+      const benchSlot = player.bench.find(slot => slot.getPokemonCard() === this);
+
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false }
+        ),
+        result => {
+          const chosen = result[0];
+          opponent.switchPokemon(chosen);
+          benchSlot?.moveTo(player.discard);
+        }
+      );
+    }
+
+    if (effect instanceof AttackEffect && (effect.attack === this.attacks[0] || effect.attack.name === this.attacks[0].name)) {
+      const addMarkerEffect = new AddMarkerEffect(effect, COOLING_JET_MARKER, this);
+      addMarkerEffect.target = effect.opponent.active;
+      return store.reduceEffect(state, addMarkerEffect);
+    }
+
+    if (effect instanceof UseAttackEffect) {
+      const player = effect.player;
+      const active = player.active;
+      const activeCard = active.getPokemonCard();
+
+      if (activeCard?.stage !== Stage.BASIC && active.marker.hasMarker(COOLING_JET_MARKER, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+    }
+
+    if (effect instanceof EndTurnEffect) {
+      effect.player.active.marker.removeMarker(COOLING_JET_MARKER, this);
+      return state;
     }
 
     return state;

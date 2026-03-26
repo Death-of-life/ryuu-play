@@ -66,7 +66,7 @@ export class GuangHuiPenHuoLong extends PokemonCard {
       commodityCode: 'CSVE1pC2',
       name: '对战派对 共梦 下 奖赏包',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/13130/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/13130/image',
     logic_group_key: GUANG_HUI_PEN_HUO_LONG_LOGIC_GROUP_KEY,
     variant_group_key: GUANG_HUI_PEN_HUO_LONG_VARIANT_GROUP_KEY,
     variant_group_size: 1,

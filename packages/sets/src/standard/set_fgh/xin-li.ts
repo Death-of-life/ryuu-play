@@ -86,7 +86,7 @@ export class XinLi extends VariantTrainerCard {
       commodityCode: 'promosvPaldea',
       name: '帕底亚训练家合影卡挂件套装&对战礼盒',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/17270/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/17270/image',
   };
 
   public set: string = 'set_g';

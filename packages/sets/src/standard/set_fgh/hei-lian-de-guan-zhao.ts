@@ -110,7 +110,7 @@ export class HeiLianDeGuanZhao extends VariantTrainerCard {
       commodityCode: 'CSVE2C2',
       name: '对战派对 耀梦 下',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/15575/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/15575/image',
   };
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

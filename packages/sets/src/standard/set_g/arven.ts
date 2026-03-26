@@ -96,7 +96,7 @@ export class Arven extends TrainerCard {
       name: '补充包 亘古开来',
       salesDate: '2025-01-17'
     },
-    image_url: 'http://localhost:3000/api/v1/cards/11950/image'
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/11950/image'
   };
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;

@@ -114,7 +114,7 @@ export class WaDongXiongDi extends VariantTrainerCard {
       commodityCode: 'PROMO3',
       name: '特典卡·剑&盾',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/10918/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/10918/image',
   };
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

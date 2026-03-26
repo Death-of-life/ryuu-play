@@ -31,7 +31,7 @@ export class ProfessorTurosScenario extends TrainerCard {
       commodityCode: 'CSV6C',
       salesDate: '2025-11-07'
     },
-    image_url: 'http://localhost:3000/api/v1/cards/15712/image'
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/15712/image'
   };
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;

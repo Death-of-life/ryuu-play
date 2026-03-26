@@ -53,7 +53,7 @@ const defaultSeed: VariantTrainerSeed = {
       attacks: [],
       features: [],
     },
-    image_url: 'http://localhost:3000/api/v1/cards/17276/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/17276/image',
   },
 };
 

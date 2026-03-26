@@ -135,7 +135,7 @@ export class LuoJiYaV extends PokemonCard {
       commodityCode: 'PROMO3',
       name: '特典卡·剑&盾',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/11354/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/11354/image',
   };
 
   public tags = [CardTag.POKEMON_V];

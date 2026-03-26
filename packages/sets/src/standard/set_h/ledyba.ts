@@ -23,7 +23,7 @@ export class Ledyba extends PokemonCard {
       commodityCode: 'CSV8C',
       name: '补充包 璀璨诡幻',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/17380/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/17380/image',
   };
 
   public stage: Stage = Stage.BASIC;

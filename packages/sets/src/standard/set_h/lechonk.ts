@@ -23,7 +23,7 @@ export class Lechonk extends PokemonCard {
       commodityCode: 'CSVSC',
       name: '对战学院',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/16818/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/16818/image',
   };
 
   public stage: Stage = Stage.BASIC;

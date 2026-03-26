@@ -1,8 +1,8 @@
 const { BotManager, SimpleBot, config } = require('@ptcg/server');
-const { CardManager } = require('@ptcg/common');
+const { CardManager, Rules } = require('@ptcg/common');
 
 // Backend config
-config.backend.address = '127.0.0.1';
+config.backend.address = '0.0.0.0';
 config.backend.port = 12021;
 config.backend.avatarsDir = __dirname + '/avatars';
 config.backend.webUiDir = __dirname + '/packages/play/dist/ptcg-play';
@@ -26,7 +26,11 @@ const cardManager = CardManager.getInstance();
 cardManager.defineFormat('Standard', [
   standardSets.setH,
   standardSets.setFgh,
-]);
+], new Rules({
+  firstTurnDrawCard: false,
+  firstTurnUseSupporter: false,
+  firstTurnUseAttack: false,
+}));
 
 // Define bots
 const botManager = BotManager.getInstance();

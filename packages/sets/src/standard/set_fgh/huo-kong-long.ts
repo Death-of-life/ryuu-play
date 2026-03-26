@@ -57,7 +57,7 @@ export class HuoKongLong extends PokemonCard {
       commodityCode: 'MISSION05',
       name: '任务奖赏包 第五弹',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/15981/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/15981/image',
     logic_group_key: 'pokemon:火恐龙:P005:G:hp90:高温冲撞70+self20',
     variant_group_key: 'pokemon:火恐龙:P005:G:hp90:高温冲撞70+self20',
     variant_group_size: 1,

@@ -66,7 +66,7 @@ export class IronHandsEx extends PokemonCard {
       commodityCode: 'CSV6C',
       name: '补充包 真实玄虚',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/15739/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/15739/image',
   };
 
   public tags = [CardTag.POKEMON_EX];

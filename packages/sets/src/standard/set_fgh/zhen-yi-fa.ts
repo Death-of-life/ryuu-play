@@ -83,7 +83,7 @@ export class ZhenYiFa extends PokemonCard {
       commodityCode: 'CBB4C',
       name: '宝石包 VOL.4',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/17266/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/17266/image',
   };
 
   public tags = [CardTag.TERA];

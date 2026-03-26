@@ -1,5 +1,4 @@
-import { Component, ViewChild, EventEmitter, Output } from '@angular/core';
-import { MatLegacyInput as MatInput } from '@angular/material/legacy-input';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'ptcg-search-box',
@@ -8,30 +7,16 @@ import { MatLegacyInput as MatInput } from '@angular/material/legacy-input';
 })
 export class SearchBoxComponent {
 
-  @ViewChild(MatInput, {static: true}) searchInput: MatInput;
   @Output() search = new EventEmitter<string>();
 
-  public isActivated = false;
   public searchValue = '';
 
   constructor() { }
 
-  public activateSearch() {
-    this.isActivated = true;
-    setTimeout(() => this.searchInput.focus());
-  }
-
   public clearSearch() {
-    this.isActivated = false;
     if (this.searchValue !== '') {
       this.searchValue = '';
       this.search.next('');
-    }
-  }
-
-  public onBlur() {
-    if (this.searchValue === '') {
-      this.isActivated = false;
     }
   }
 

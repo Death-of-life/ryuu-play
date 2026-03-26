@@ -99,7 +99,7 @@ export class DaBiNiaoEx extends PokemonCard {
       commodityCode: 'CSV4C',
       name: '补充包 嘉奖回合',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/14396/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/14396/image',
   };
 
   public tags = [CardTag.POKEMON_EX];

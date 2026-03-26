@@ -139,6 +139,7 @@ import { Manaphy } from './manaphy';
 import { MarniesPride } from './marnies-pride';
 import { MasterBall } from './master-ball';
 import { Mela } from './mela';
+import { MewEx } from './mew-ex';
 import { Mesagoza } from './mesagoza';
 import { MetalLab } from './metal-lab';
 import { MiKeLi } from './mi-ke-li';
@@ -193,6 +194,7 @@ import { RockyHelmet } from './rocky-helmet';
 import { Roxanne } from './roxanne';
 import { SafetyGoggles } from './safety-goggles';
 import { SaiJi } from './sai-ji';
+import { SandyShocksG } from './sandy-shocks-g';
 import { SaWaLuo } from './sa-wa-luo';
 import { ShaLi } from './sha-li';
 import { ShaLiNa } from './sha-li-na';
@@ -213,6 +215,7 @@ import { TianKongFengYinShi } from './tian-kong-feng-yin-shi';
 import { TianXingDuiShouXia } from './tian-xing-dui-shou-xia';
 import { Toolbox } from './toolbox';
 import { TrekkingShoes } from './trekking-shoes';
+import { SwitchCart } from './switch-cart';
 import { TuTuTouKui } from './tu-tu-tou-kui';
 import { TuiHua } from './tui-hua';
 import { VariantTrainerSeed } from './variant-trainer-card';
@@ -352,7 +355,7 @@ function seedPokemonVariant<T extends PokemonVariantLike>(instance: T, options: 
       commodityCode: options.commodityCode,
       name: options.collectionName,
     },
-    image_url: `http://localhost:3000/api/v1/cards/${options.id}/image`,
+    image_url: `http://212.52.0.192:3000/api/v1/cards/${options.id}/image`,
     logic_group_key: options.logicGroupKey,
     variant_group_key: options.variantGroupKey,
     variant_group_size: options.variantGroupSize,
@@ -377,6 +380,7 @@ const overrideFactories: Record<string, (card: TrainerCardLike) => Card> = {
   '捕获香氛': card => new CapturingAroma(toSeed(card)),
   '精灵球': card => new PokeBall(toSeed(card)),
   '宝可梦交替': card => seedExisting(new Switch(), toSeed(card)),
+  '交替推车': card => new SwitchCart(toSeed(card)),
   '宝可梦捕捉器': card => seedExisting(new PokemonCatcher(), toSeed(card)),
   '神奇糖果': card => seedExisting(new RareCandy(), toSeed(card)),
   '高级球': card => seedExisting(new UltraBall(), toSeed(card)),
@@ -612,6 +616,7 @@ export const setFgh: Card[] = [
   ...generatedSetFgh
     .filter((card): card is TrainerCardLike => card instanceof TrainerCard && overriddenNames.has(normalizeTrainerName(card.name)))
     .map(card => overrideFactories[normalizeTrainerName(card.name)](card)),
+  new MewEx(),
   new GardevoirEx(),
   new Kirlia(),
   new KirliaCs5aC(),
@@ -774,6 +779,7 @@ export const setFgh: Card[] = [
   new LuoJiYaV(),
   new LuoJiYaVSTAR(),
   new MiraidonEx(),
+  new SandyShocksG(),
   new NuYingGeEx(),
   ...penHuoLongExVariants,
   new RaichuV(),
@@ -845,7 +851,9 @@ export * from './counter-catcher';
 export * from './lost-vacuum';
 export * from './roxanne';
 export * from './mela';
+export * from './mew-ex';
 export * from './mesagoza';
+export * from './sandy-shocks-g';
 export * from './zhong-li-zhong-xin';
 export * from './zu-ai-zhi-ta';
 export * from './forest-seal-stone';
@@ -867,6 +875,7 @@ export * from './energy-sticker';
 export * from './electric-generator';
 export * from './advanced-aroma';
 export * from './trekking-shoes';
+export * from './switch-cart';
 export * from './sweet-ball';
 export * from './defiance-band';
 export * from './choice-belt';

@@ -97,7 +97,7 @@ const defaultSeed: VariantTrainerSeed = {
       name: '补充包 碧海暗影 逐',
       commodityNames: ['补充包 碧海暗影 逐'],
     },
-    image_url: 'http://localhost:3000/api/v1/cards/10578/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/10578/image',
   },
 };
 

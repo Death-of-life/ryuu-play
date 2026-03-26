@@ -117,7 +117,7 @@ export class HuoKongLongCs5aC extends PokemonCard {
       commodityCode: 'CS5aC',
       name: '补充包 勇魅群星 魅',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/9962/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/9962/image',
     logic_group_key: HUO_KONG_LONG_CS5AC_LOGIC_GROUP_KEY,
     variant_group_key: HUO_KONG_LONG_CS5AC_VARIANT_GROUP_KEY,
     variant_group_size: 2,

@@ -65,7 +65,7 @@ export class XiaoHuoLong extends PokemonCard {
       commodityCode: '151C4',
       name: '收集啦151 聚',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/11367/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/11367/image',
   };
 
   public stage: Stage = Stage.BASIC;

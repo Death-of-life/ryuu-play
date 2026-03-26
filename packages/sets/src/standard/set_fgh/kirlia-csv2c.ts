@@ -64,7 +64,7 @@ export class KirliaCsv2C extends PokemonCard {
       commodityCode: 'CSV2C',
       name: '补充包 奇迹启程',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/12791/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/12791/image',
   };
 
   public stage: Stage = Stage.STAGE_1;

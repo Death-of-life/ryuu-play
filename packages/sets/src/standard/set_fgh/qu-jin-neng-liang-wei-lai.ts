@@ -89,7 +89,7 @@ export class QuJinNengLiangWeiLai extends EnergyCard {
       name: '补充包 真实玄虚',
       commodityNames: ['补充包 真实玄虚'],
     },
-    image_url: 'http://localhost:3000/api/v1/cards/15971/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/15971/image',
   };
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

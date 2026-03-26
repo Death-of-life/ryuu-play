@@ -5,6 +5,7 @@ import {
   Effect,
   EnergyCard,
   EnergyType,
+  GameError,
   GameMessage,
   PlayerType,
   PokemonCard,
@@ -54,7 +55,7 @@ const defaultSeed: VariantTrainerSeed = {
       attacks: [],
       features: [],
     },
-    image_url: 'http://localhost:3000/api/v1/cards/17375/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/17375/image',
   },
 };
 
@@ -67,8 +68,10 @@ function isAncientPokemon(card: Card): card is PokemonCard {
   const labels = [
     rawData.rawData?.raw_card?.details?.specialCardLabel,
     rawData.rawData?.api_card?.specialCardLabel,
+    rawData.rawData?.raw_card?.specialCard,
+    rawData.rawData?.api_card?.specialCard,
   ];
-  return labels.some((label: unknown) => label === '古代');
+  return labels.some((label: unknown) => label === '古代' || label === 'ancient');
 }
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -91,29 +94,31 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     blockedTo.push(target);
   });
 
-  if (energyCount > 0 && ancientTargets > 0) {
-    let transfers: { to: CardTarget; card: Card }[] = [];
-    yield store.prompt(
-      state,
-      new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_TO_ACTIVE,
-        player.discard,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: true, min: 0, max: Math.min(2, energyCount, ancientTargets), blockedTo, sameTarget: false, differentTargets: true }
-      ),
-      result => {
-        transfers = result || [];
-        next();
-      }
-    );
+  if (energyCount === 0 || ancientTargets === 0) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
 
-    for (const transfer of transfers) {
-      const target = StateUtils.getTarget(state, player, transfer.to);
-      player.discard.moveCardTo(transfer.card, target.energies);
+  let transfers: { to: CardTarget; card: Card }[] = [];
+  yield store.prompt(
+    state,
+    new AttachEnergyPrompt(
+      player.id,
+      GameMessage.ATTACH_ENERGY_TO_ACTIVE,
+      player.discard,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+      { allowCancel: true, min: 0, max: Math.min(2, energyCount, ancientTargets), blockedTo, sameTarget: false, differentTargets: true }
+    ),
+    result => {
+      transfers = (result || []).slice(0, Math.min(2, energyCount, ancientTargets));
+      next();
     }
+  );
+
+  for (const transfer of transfers) {
+    const target = StateUtils.getTarget(state, player, transfer.to);
+    player.discard.moveCardTo(transfer.card, target.energies);
   }
 
   const drawCount = Math.min(3, player.deck.cards.length);

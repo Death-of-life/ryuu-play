@@ -55,7 +55,7 @@ const defaultSeed: VariantTrainerSeed = {
       name: '强化包 胜象星引',
       commodityNames: ['强化包 胜象星引'],
     },
-    image_url: 'http://localhost:3000/api/v1/cards/11080/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/11080/image',
   },
 };
 

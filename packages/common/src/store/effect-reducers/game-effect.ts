@@ -48,6 +48,10 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
+  if (state.turn === 1 && !state.rules.firstTurnUseAttack) {
+    throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+  }
+
   const sp = player.active.specialConditions;
   if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {
     throw new GameError(GameMessage.BLOCKED_BY_SPECIAL_CONDITION);

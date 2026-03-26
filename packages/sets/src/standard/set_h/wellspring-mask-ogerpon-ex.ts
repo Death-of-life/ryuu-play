@@ -125,7 +125,7 @@ export class WellspringMaskOgerponEx extends PokemonCard {
       name: '补充包 璀璨诡幻',
       salesDate: '2026-03-13'
     },
-    image_url: 'http://localhost:3000/api/v1/cards/17444/image'
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/17444/image'
   };
 
   public tags = [CardTag.POKEMON_EX, CardTag.TERA];

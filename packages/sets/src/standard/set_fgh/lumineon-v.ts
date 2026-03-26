@@ -116,7 +116,7 @@ export class LumineonV extends PokemonCard {
       commodityCode: 'CS5bC',
       name: '补充包 勇魅群星 勇',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/9553/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/9553/image',
   };
 
   public tags = [CardTag.POKEMON_V];

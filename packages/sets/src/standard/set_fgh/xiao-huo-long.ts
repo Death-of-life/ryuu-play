@@ -82,7 +82,7 @@ function seedPokemonVariant<T extends SeededPokemonCard>(instance: T, seed: Poke
       ...(seed.illustratorNames ? { illustratorNames: seed.illustratorNames } : {}),
     },
     collection: seed.collection,
-    image_url: `http://localhost:3000/api/v1/cards/${seed.id}/image`,
+    image_url: `http://212.52.0.192:3000/api/v1/cards/${seed.id}/image`,
   };
 
   instance.fullName = `${instance.name} ${seed.collectionNumber}#${seed.id}`;
@@ -196,7 +196,7 @@ export class XiaoHuoLong extends PokemonCard {
       commodityCode: '151C4',
       name: '收集啦151 聚',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/11515/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/11515/image',
     logic_group_key: BURN_STADIUM_LOGIC_GROUP_KEY,
     variant_group_key: BURN_STADIUM_LOGIC_GROUP_KEY,
   };
@@ -302,7 +302,7 @@ export class XiaoHuoLongCs5aC extends PokemonCard {
       commodityCode: 'CS5aC',
       name: '补充包 勇魅群星 魅',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/9961/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/9961/image',
     logic_group_key: BURNING_TAIL_LOGIC_GROUP_KEY,
     variant_group_key: BURNING_TAIL_LOGIC_GROUP_KEY,
   };
@@ -391,7 +391,7 @@ export class XiaoHuoLongCsv5C extends PokemonCard {
       commodityCode: 'CSV5C',
       name: '补充包 黑晶炽诚',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/14948/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/14948/image',
     logic_group_key: HIGH_TEMP_LOGIC_GROUP_KEY,
     variant_group_key: HIGH_TEMP_LOGIC_GROUP_KEY,
   };

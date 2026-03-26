@@ -128,7 +128,7 @@ export class ChangXiuHeFuShaoNv extends VariantTrainerCard {
       commodityCode: 'CS5bC',
       name: '补充包 勇魅群星 勇',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/9782/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/9782/image',
   };
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

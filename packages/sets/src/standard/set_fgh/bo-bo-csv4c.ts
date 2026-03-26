@@ -83,7 +83,7 @@ export function seedBoBoCsv4CVariant<T extends BoBoCsv4CVariantCapable>(
         rarityLabel: options.rarityLabel,
       },
     },
-    image_url: `http://localhost:3000/api/v1/cards/${options.id}/image`,
+    image_url: `http://212.52.0.192:3000/api/v1/cards/${options.id}/image`,
     logic_group_key: BO_BO_CSV4C_LOGIC_GROUP_KEY,
     variant_group_key: BO_BO_CSV4C_VARIANT_GROUP_KEY,
   };
@@ -137,7 +137,7 @@ export class BoBoCsv4C extends PokemonCard {
       commodityCode: 'CSV4C',
       name: '补充包 嘉奖回合',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/14375/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/14375/image',
     logic_group_key: BO_BO_CSV4C_LOGIC_GROUP_KEY,
     variant_group_key: BO_BO_CSV4C_VARIANT_GROUP_KEY,
     variant_group_size: 4,

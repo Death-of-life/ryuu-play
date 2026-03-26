@@ -5,6 +5,8 @@ export class Rules {
   public firstTurnDrawCard = true;
 
   public firstTurnUseSupporter = true;
+
+  public firstTurnUseAttack = true;
   
   public noPrizeForFossil = true;
 

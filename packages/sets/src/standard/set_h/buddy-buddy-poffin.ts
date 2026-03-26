@@ -89,7 +89,7 @@ export class BuddyBuddyPoffin extends TrainerCard {
       commodityCode: 'CSV7C',
       salesDate: '2026-01-16',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/16752/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/16752/image',
   };
 
   public trainerType: TrainerType = TrainerType.ITEM;

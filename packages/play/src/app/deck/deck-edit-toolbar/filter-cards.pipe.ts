@@ -50,12 +50,28 @@ export class FilterCardsPipe implements PipeTransform {
   }
 
   private matchesSearch(card: Card, searchValue: string): boolean {
-    const rawName = (card.rawData?.raw_card as { name?: unknown } | undefined)?.name;
+    const cardRecord = card as Card & { text?: unknown };
+    const rawCard = (card.rawData?.raw_card as Record<string, unknown> | undefined) || {};
+    const rawDetails = (rawCard.details as Record<string, unknown> | undefined) || {};
+    const collection = (card.rawData?.collection as Record<string, unknown> | undefined) || {};
+    const rawName = rawCard.name;
     const chineseName = typeof rawName === 'string' ? rawName.toLowerCase() : '';
+    const cardText = typeof cardRecord.text === 'string' ? cardRecord.text.toLowerCase() : '';
+    const collectionNumber = typeof rawDetails.collectionNumber === 'string' ? rawDetails.collectionNumber.toLowerCase() : '';
+    const rarityLabel = typeof rawDetails.rarityLabel === 'string' ? rawDetails.rarityLabel.toLowerCase() : '';
+    const yorenCode = typeof rawCard.yorenCode === 'string' ? rawCard.yorenCode.toLowerCase() : '';
+    const commodityCode = typeof rawCard.commodityCode === 'string' ? rawCard.commodityCode.toLowerCase() : '';
+    const collectionName = typeof collection.name === 'string' ? collection.name.toLowerCase() : '';
 
     return card.name.toLowerCase().includes(searchValue)
       || chineseName.includes(searchValue)
-      || card.fullName.toLowerCase().includes(searchValue);
+      || card.fullName.toLowerCase().includes(searchValue)
+      || cardText.includes(searchValue)
+      || collectionNumber.includes(searchValue)
+      || rarityLabel.includes(searchValue)
+      || yorenCode.includes(searchValue)
+      || commodityCode.includes(searchValue)
+      || collectionName.includes(searchValue);
   }
 
   private getCardTypes(card: Card): CardType[] {

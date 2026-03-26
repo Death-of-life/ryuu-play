@@ -29,7 +29,7 @@ export class Arbok extends PokemonCard {
       commodityCode: 'CSV7C',
       name: '补充包 利刃猛醒',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/16374/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/16374/image',
   };
 
   public stage: Stage = Stage.STAGE_1;

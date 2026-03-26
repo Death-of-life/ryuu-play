@@ -65,7 +65,7 @@ export class ShiZuDaNiao extends PokemonCard {
       commodityCode: 'CS6aC',
       name: '补充包 碧海暗影 啸',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/10844/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/10844/image',
   };
 
   public stage: Stage = Stage.STAGE_2;

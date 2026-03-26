@@ -49,6 +49,18 @@ export class StateSanitizer {
   private getSecretCardLists(state: State): CardList[] {
     const players = state.players.filter(p => p.id === this.client.id);
     const cardLists: CardList[] = [];
+
+    // Spectators are not represented in state.players. For observers, keep
+    // both players' hands and decks visible by default.
+    if (players.length === 0) {
+      state.prompts.forEach(prompt => {
+        if (prompt instanceof ChooseCardsPrompt && prompt.options.isSecret) {
+          cardLists.push(prompt.cards);
+        }
+      });
+      return cardLists;
+    }
+
     players.forEach(player => {
       if (player.deck.isSecret) {
         cardLists.push(player.deck);

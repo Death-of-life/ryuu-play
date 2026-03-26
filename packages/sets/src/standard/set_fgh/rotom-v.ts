@@ -63,7 +63,7 @@ export class RotomV extends PokemonCard {
       commodityCode: 'CS6.5C',
       name: '强化包 胜象星引',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/10957/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/10957/image',
   };
 
   public tags = [CardTag.POKEMON_V];

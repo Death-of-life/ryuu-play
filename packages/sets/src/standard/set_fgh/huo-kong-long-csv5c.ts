@@ -81,7 +81,7 @@ export class HuoKongLongCsv5c extends PokemonCard {
       commodityCode: 'CSV5C',
       name: '补充包 黑晶炽诚',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/14949/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/14949/image',
     logic_group_key: HUO_KONG_LONG_CSV5C_LOGIC_GROUP_KEY,
     variant_group_key: HUO_KONG_LONG_CSV5C_VARIANT_GROUP_KEY,
     variant_group_size: 6,

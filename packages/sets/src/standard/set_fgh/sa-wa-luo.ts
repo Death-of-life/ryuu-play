@@ -63,7 +63,7 @@ const defaultSeed: VariantTrainerSeed = {
       commodityCode: 'CSV2C',
       name: '补充包 奇迹启程',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/12817/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/12817/image',
   },
 };
 

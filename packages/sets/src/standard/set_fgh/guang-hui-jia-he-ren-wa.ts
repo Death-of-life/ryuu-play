@@ -221,7 +221,7 @@ export class GuangHuiJiaHeRenWa extends PokemonCard {
       linkType: 0,
       image: 'img/222/cover.png',
     },
-    image_url: 'http://localhost:3000/api/v1/cards/10954/image',
+    image_url: 'http://212.52.0.192:3000/api/v1/cards/10954/image',
   };
 
   public tags = [CardTag.RADIANT];
