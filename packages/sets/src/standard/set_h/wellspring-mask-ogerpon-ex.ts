@@ -32,8 +32,9 @@ function* useTorrentialPump(
 ): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
+  const source = effect.player.active;
 
-  if (player.active.energies.cards.length < 3) {
+  if (source.energies.cards.length < 3) {
     return state;
   }
 
@@ -53,7 +54,7 @@ function* useTorrentialPump(
     new ChooseCardsPrompt(
       player.id,
       GameMessage.CHOOSE_CARD_TO_DECK,
-      player.active.energies,
+      source.energies,
       { superType: SuperType.ENERGY },
       { min: 3, max: 3, allowCancel: false }
     ),
@@ -67,7 +68,7 @@ function* useTorrentialPump(
     return state;
   }
 
-  player.active.energies.moveCardsTo(cards as EnergyCard[], player.deck);
+  source.energies.moveCardsTo(cards as EnergyCard[], player.deck);
 
   yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

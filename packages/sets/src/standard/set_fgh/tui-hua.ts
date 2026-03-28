@@ -11,7 +11,7 @@ import {
 } from '@ptcg/common';
 
 import { VariantTrainerCard, VariantTrainerSeed } from './variant-trainer-card';
-import { discardTmAtEndTurn, ensureTmActiveUse, markTmUsed, prepareTmAttack } from './tm-tool-utils';
+import { discardTmAtEndTurn, ensureTmActiveUse, finishTmUse, prepareTmAttack } from './tm-tool-utils';
 
 const attack = {
   name: '退化',
@@ -53,8 +53,7 @@ function* useCard(
     throw new GameError(GameMessage.CANNOT_USE_POWER);
   }
 
-  markTmUsed(effect.player, effect.trainerCard);
-  return state;
+  return finishTmUse(store, state, effect.player, effect.trainerCard);
 }
 
 export class TuiHua extends VariantTrainerCard {

@@ -10,6 +10,7 @@ import { PokemonCatcher } from '../set-black-and-white/pokemon-catcher';
 import { ProfessorJuniper } from '../set-black-and-white/professor-juniper';
 import { SuperRod } from '../set-black-and-white/super-rod';
 import { UltraBall } from '../set-black-and-white/ultra-ball';
+import { UnfairStamp } from './unfair-stamp';
 import { Lysandre } from '../set-black-and-white-2/lysandre';
 import { DarkPatch } from '../set-black-and-white-2/dark-patch';
 import { RareCandy } from '../set-black-and-white/rare-candy';
@@ -495,6 +496,7 @@ const overrideFactories: Record<string, (card: TrainerCardLike) => Card> = {
   '璀璨结晶': card => new SparklingCrystal(toSeed(card)),
   '活力头带': card => new VitalityBand(toSeed(card)),
   '勇气护符': card => new BraveryCharm(toSeed(card)),
+  '不公印章': card => new UnfairStamp(toSeed(card)),
   '锅型头盔': card => new RockyHelmet(toSeed(card)),
   '岩石胸甲': card => new RockChestPlate(toSeed(card)),
   '吃剩的东西': card => new Leftovers(toSeed(card)),
@@ -868,6 +870,7 @@ export * from './hui-li-biao-energy';
 export * from './v-guard-energy';
 export * from './judge';
 export * from './great-ball';
+export * from './unfair-stamp';
 export * from './vitality-band';
 export * from './bravery-charm';
 export * from './pal-pad';

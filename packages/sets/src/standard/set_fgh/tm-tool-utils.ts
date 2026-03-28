@@ -50,6 +50,11 @@ export function markTmUsed(player: Player, trainerCard: TrainerCard): void {
   player.marker.addMarker(TM_USED_MARKER, trainerCard);
 }
 
+export function finishTmUse(store: StoreLike, state: State, player: Player, trainerCard: TrainerCard): State {
+  markTmUsed(player, trainerCard);
+  return store.reduceEffect(state, new EndTurnEffect(player));
+}
+
 export function discardTmAtEndTurn(state: State, effect: Effect, self: TrainerCard): State {
   if (!(effect instanceof EndTurnEffect)) {
     return state;

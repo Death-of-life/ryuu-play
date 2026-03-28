@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy } from '@angular/core';
 import { DraggedItem } from '@ng-dnd/sortable';
 import { DropTarget, DndService } from '@ng-dnd/core';
 import { Observable } from 'rxjs';
-import { Player, SlotType, PlayerType, CardTarget, Card, CardList } from '@ptcg/common';
+import { Player, SlotType, PlayerType, CardTarget, Card, CardList, TrainerCard } from '@ptcg/common';
 import { map } from 'rxjs/operators';
 
 import { HandItem, HandCardType } from '../hand/hand-item.interface';
@@ -281,7 +281,11 @@ export class BoardComponent implements OnDestroy {
 
         // Use attack from the card
         } else if (result.attack) {
-          this.gameService.attack(gameId, result.attack);
+          if (result.card instanceof TrainerCard && result.card.useWhenInPlay) {
+            this.gameService.trainer(gameId, result.card.name, target);
+          } else {
+            this.gameService.attack(gameId, result.attack);
+          }
 
         // Use trainer in play (attached to the Pokemon)
         } else if (result.trainer) {

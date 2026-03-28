@@ -21,7 +21,7 @@ import {
 } from '@ptcg/common';
 
 import { VariantTrainerCard, VariantTrainerSeed } from './variant-trainer-card';
-import { discardTmAtEndTurn, ensureTmActiveUse, markTmUsed, prepareTmAttack } from './tm-tool-utils';
+import { discardTmAtEndTurn, ensureTmActiveUse, finishTmUse, prepareTmAttack } from './tm-tool-utils';
 
 const attack = {
   name: '进化',
@@ -136,8 +136,7 @@ function* useCard(
     next();
   });
 
-  markTmUsed(player, effect.trainerCard);
-  return state;
+  return finishTmUse(store, state, player, effect.trainerCard);
 }
 
 export class JinHua extends VariantTrainerCard {

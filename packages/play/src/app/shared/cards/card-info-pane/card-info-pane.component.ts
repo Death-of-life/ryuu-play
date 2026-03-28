@@ -1,5 +1,5 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard } from '@ptcg/common';
+import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, PokemonCard, TrainerCard } from '@ptcg/common';
 import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 
 import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
@@ -30,6 +30,7 @@ export interface CardInfoPaneAction {
 export class CardInfoPaneComponent implements OnChanges {
 
   @Input() card: Card;
+  @Input() cardList: any;
   @Input() facedown: boolean;
   @Input() options: CardInfoPaneOptions = {};
   @Output() action = new EventEmitter<any>();
@@ -49,6 +50,38 @@ export class CardInfoPaneComponent implements OnChanges {
   public clickAction(action: CardInfoPaneAction) {
     action.card = this.card;
     this.action.next(action);
+  }
+
+  public getDisplayedHp(): number {
+    const pokemonCard = this.card as PokemonCard;
+    if (!pokemonCard || pokemonCard.superType !== SuperType.POKEMON) {
+      return (this.card as Card & { hp?: number }).hp || 0;
+    }
+
+    const baseHp = pokemonCard.hp || 0;
+    const attachedCards = this.cardList?.cards || [];
+    const attachedTools = attachedCards.filter((card): card is TrainerCard =>
+      card instanceof TrainerCard && card.trainerType === TrainerType.TOOL
+    );
+
+    let bonus = 0;
+    attachedTools.forEach(tool => {
+      switch (tool.name) {
+        case '勇气护符':
+          if (pokemonCard.stage === Stage.BASIC) {
+            bonus += 50;
+          }
+          break;
+        case '英雄斗篷':
+          bonus += 100;
+          break;
+        case '豪华斗篷':
+          bonus += 100;
+          break;
+      }
+    });
+
+    return baseHp + bonus;
   }
 
   public ngOnChanges() {

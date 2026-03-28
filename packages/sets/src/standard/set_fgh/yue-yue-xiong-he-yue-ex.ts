@@ -4,12 +4,19 @@ import {
   CardType,
   CheckAttackCostEffect,
   Effect,
+  EndTurnEffect,
+  GameError,
+  GameMessage,
   PokemonCard,
   Stage,
   State,
   StateUtils,
   StoreLike,
+  UseAttackEffect,
 } from '@ptcg/common';
+
+const BLOOD_MOON_USED_MARKER = 'BLOOD_MOON_USED_MARKER';
+const BLOOD_MOON_BLOCK_MARKER = 'BLOOD_MOON_BLOCK_MARKER';
 
 export class YueYueXiongHeYueEx extends PokemonCard {
   public rawData = {
@@ -106,6 +113,25 @@ export class YueYueXiongHeYueEx extends PokemonCard {
     }
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+      effect.player.marker.addMarker(BLOOD_MOON_USED_MARKER, this);
+      return state;
+    }
+
+    if (effect instanceof UseAttackEffect && effect.player.active.getPokemonCard() === this) {
+      if (effect.attack === this.attacks[0] && effect.player.marker.hasMarker(BLOOD_MOON_BLOCK_MARKER, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      return state;
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(BLOOD_MOON_USED_MARKER, this)) {
+      effect.player.marker.removeMarker(BLOOD_MOON_USED_MARKER, this);
+      effect.player.marker.addMarker(BLOOD_MOON_BLOCK_MARKER, this);
+      return state;
+    }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(BLOOD_MOON_BLOCK_MARKER, this)) {
+      effect.player.marker.removeMarker(BLOOD_MOON_BLOCK_MARKER, this);
       return state;
     }
 

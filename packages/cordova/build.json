@@ -1,0 +1,11 @@
+{
+  "android": {
+    "release": {
+      "keystore": "keys/ryuu-play-release.keystore",
+      "storePassword": "dCTQv01g4uO6fnukEArrtZU3",
+      "alias": "ryuuplay-release",
+      "password": "dCTQv01g4uO6fnukEArrtZU3",
+      "keystoreType": "pkcs12"
+    }
+  }
+}

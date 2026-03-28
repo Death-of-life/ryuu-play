@@ -1,10 +1,15 @@
 import {
+  AttackEffect,
   Card,
   CardTag,
   CardType,
+  CheckProvidedEnergyEffect,
+  Effect,
   PokemonCard,
   PowerType,
   Stage,
+  State,
+  StoreLike,
 } from '@ptcg/common';
 
 type GeneratedSimpleHPokemonCardData = {
@@ -55,6 +60,20 @@ class GeneratedSimpleHPokemonCard extends PokemonCard {
     this.powers = data.powers;
     this.attacks = data.attacks;
     this.rawData = data.rawData as any;
+  }
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof AttackEffect && effect.attack.name === '特殊滚动' && this.name === '奇诺栗鼠') {
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(effect.player, effect.player.active);
+      state = store.reduceEffect(state, checkProvidedEnergy);
+      const specialEnergyCount = checkProvidedEnergy.energyMap
+        .filter(e => e.card.energyType === 'SPECIAL')
+        .length;
+      effect.damage = specialEnergyCount * 70;
+      return state;
+    }
+
+    return state;
   }
 }
 

@@ -264,6 +264,10 @@ export class HouJiaoWeiG extends PokemonCard {
           if (target === undefined) {
             return;
           }
+          const selfDamage = Math.floor(effect.player.active.damage / 10) * 20;
+          if (selfDamage <= 0) {
+            return;
+          }
 
           const selectedPokemon = typeof target.getPokemonCard === 'function' ? target.getPokemonCard() : undefined;
           const actualTarget = target === opponent.active
@@ -282,15 +286,14 @@ export class HouJiaoWeiG extends PokemonCard {
             return;
           }
 
-          const damage = Math.floor(actualTarget.damage / 10) * 20;
           if (actualTarget === opponent.active) {
-            const damageEffect = new DealDamageEffect(effect, damage);
+            const damageEffect = new DealDamageEffect(effect, selfDamage);
             damageEffect.target = actualTarget;
             store.reduceEffect(state, damageEffect);
             return;
           }
 
-          const damageEffect = new PutDamageEffect(effect, damage);
+          const damageEffect = new PutDamageEffect(effect, selfDamage);
           damageEffect.target = actualTarget;
           store.reduceEffect(state, damageEffect);
         }

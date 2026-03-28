@@ -126,9 +126,9 @@ export class IronBundle extends PokemonCard {
       return store.prompt(
         state,
         new ChoosePokemonPrompt(
-          player.id,
+          opponent.id,
           GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
+          PlayerType.BOTTOM_PLAYER,
           [SlotType.BENCH],
           { allowCancel: false }
         ),

@@ -1,5 +1,5 @@
 export const environment = {
-  apiUrl: 'https://ptcg.ryuu.eu',
+  apiUrl: 'https://ptcg.easygod.tk',
   timeout: 5000,
   production: true,
   apiVersion: 4,

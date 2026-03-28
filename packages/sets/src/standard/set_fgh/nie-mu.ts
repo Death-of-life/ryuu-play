@@ -91,7 +91,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.id,
       GameMessage.CHOOSE_CARD_TO_HAND,
       player.discard,
-      { superType: SuperType.POKEMON },
+      { superType: SuperType.POKEMON, stage: Stage.BASIC },
       { min: 1, max: 1, allowCancel: false, blocked: discardBlocked }
     ),
     cards => {
@@ -125,7 +125,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   const target = targetSlots[0];
-  target.moveTo(player.discard);
+  const currentPokemon = target.getPokemonCard();
+  if (currentPokemon === undefined) {
+    return state;
+  }
+
+  target.pokemons.moveCardTo(currentPokemon, player.discard);
   player.discard.moveCardTo(selectedDiscard[0], target.pokemons);
   return state;
 }

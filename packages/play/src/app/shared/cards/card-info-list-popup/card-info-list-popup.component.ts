@@ -35,6 +35,7 @@ export class CardInfoListPopupComponent {
 
     const data: CardInfoPopupData = {
       card,
+      cardList: this.cardList,
       facedown: this.facedown,
       options: this.options
     };
